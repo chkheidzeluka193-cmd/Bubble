@@ -1,0 +1,2000 @@
+-- humble mog by 9f3l / discord.gg/privateduels
+
+do
+    local K = _G;
+    pcall(function() local R = type(getfenv); if R == "function" then K = getfenv(0); end; end);
+    local R = K;
+    pcall(function() local X = type(getgenv); if X == "function" then R = getgenv(); end; end);
+    if type(K) ~= "table" then
+        K = _G;
+    end;
+    if type(R) ~= "table" then
+        R = K;
+    end;
+    local X, c = rawget(K, "sethiddenproperty") or(rawget(R, "sethiddenproperty")) or(rawget(K, "set_hidden_property")) or(rawget(R, "set_hidden_property")) or(rawget(K, "sethiddenprop")) or(rawget(R, "sethiddenprop")), rawget(K, "syn") or(rawget(R, "syn"));
+    if type(X) ~= "function" and type(c) == "table" then
+        X = rawget(c, "sethiddenproperty") or(rawget(c, "set_hidden_property"));
+    end;
+    if type(X) == "function" then
+        pcall(function() rawset(K, "sethiddenproperty", X); end);
+        pcall(function() rawset(R, "sethiddenproperty", X); end);
+    end;
+    local X = rawget(K, "setfpscap") or(rawget(R, "setfpscap")) or(rawget(K, "set_fps_cap")) or(rawget(R, "set_fps_cap")) or(rawget(K, "setfpslimit")) or(rawget(R, "setfpslimit"));
+    X = if type(X) ~= "function" and type(c) == "table" then
+        rawget(c, "setfpscap") or(rawget(c, "set_fps_cap"))
+    else
+        X;
+        if type(X) == "function" then
+            pcall(X, 9999);
+        end;
+    end;
+    local K, R, X, c, i, Q, h, m, A = (function() local H, E = game:GetService("Players"), game:GetService("UserInputService"); local s = E.TouchEnabled; pcall(function() local b = E:GetPlatform(); s = E.TouchEnabled and(b == Enum.Platform.Android or b == Enum.Platform.IOS or not E.MouseEnabled); end); return H, E, game:GetService("TweenService"), game:GetService("RunService"), game:GetService("ReplicatedStorage"), game:GetService("Lighting"), game:GetService("HttpService"), H.LocalPlayer, s; end)();
+    local H = "unknown";
+    do
+        local E = _G;
+        pcall(function() local s = type(getgenv); if s == "function" then E = getgenv(); end; end);
+        if type(E) ~= "table" then
+            E = _G;
+        end;
+        local s = rawget(E, "identifyexecutor") or(rawget(E, "getexecutorname")) or type(_G) == "table" and(rawget(_G, "identifyexecutor") or(rawget(_G, "getexecutorname")));
+        if type(s) == "function" then
+            pcall(function() local E = s(); if E ~= nil then H = tostring(E); end; end);
+        end;
+    end;
+    _G.__BubbleWaveSafeMode = string.find(string.lower(H), "wave", 1, true) ~= nil;
+    do
+        local H = {"Bubble_Panel", "BubbleHub", "BUBBLE_Panel", "DashEffectGui", "BubbleAutoGrabBar", "BubbleLaggerGUI", "BubbleBypassGUI", "BubbleMobileUI", "BubbleEnemyWidget"};
+        pcall(function() local E = _G.BubbleBypass; if E then if E.Stop then E.Stop(); else if E.SetAutoOnSteal then E.SetAutoOnSteal(false); end; if E.SetBypass then E.SetBypass(false); end; end; end; end);
+        pcall(function() local E = _G.BubbleLagger; if E then if E.Stop then E.Stop(); else if E.SetEnabled then E.SetEnabled(false); end; if E.SetLowEndEnabled then E.SetLowEndEnabled(false); end; end; end; end);
+        if _G.__BUBBLE_STATE then
+            _G.__BUBBLE_STATE.alive = false;
+            pcall(function() for E, E in ipairs(_G.__BUBBLE_STATE.stoppers or {}) do pcall(E); end; for E, E in ipairs(_G.__BUBBLE_STATE.conns or {}) do pcall(function() E:Disconnect(); end); end; end);
+        end;
+        _G.__BUBBLE_STATE = nil;
+        _G.__BubbleTrackConn = nil;
+        _G.__BubbleTrackStopper = nil;
+        pcall(function() if _G.__speedBoostConn then _G.__speedBoostConn:Disconnect(); _G.__speedBoostConn = nil; end; end);
+        pcall(function() if _G.__stopSpeedBoost then _G.__stopSpeedBoost (); end; end);
+        pcall(function() game:GetService("NetworkClient"):SetOutgoingKBPSLimit(math.huge); end);
+        pcall(function() local E, s = ipairs, {game:GetService("CoreGui"), m.PlayerGui}; for b, V in E(s) do for E, E in ipairs(H) do while true do b = V:FindFirstChild(E); if not b then break; end; b:Destroy(); end; end; end; end);
+        pcall(function() for H, E in ipairs(K:GetPlayers()) do H = E.Character; if H then for E, E in ipairs(H:GetChildren()) do for H, H in ipairs(E:GetChildren()) do if H.Name == "GreenDuelsBB" or H.Name == "BubbleSpeedBill" or H.Name == "BubbleHubOverhead" or H.Name == "BubbleAimbotBodyLock" or H.Name == "BubbleAimbotBodyAttachment" or H.Name == "BubbleTPBatMarkerBodyLock" or H.Name == "BubbleTPBatMarkerAttachment" then H:Destroy(); end; end; end; end; end; end);
+        _G.__BUBBLE_STATE = {conns = {}, stoppers = {}, alive = true};
+        function _G.__BubbleTrackConn (H)
+            if H then
+                table.insert(_G.__BUBBLE_STATE.conns, H);
+            end;
+            return H;
+        end;
+        function _G.__BubbleTrackStopper (H)
+            if H then
+                table.insert(_G.__BUBBLE_STATE.stoppers, H);
+            end;
+        end;
+        _G.__BubbleResetHooks = {};
+        function _G.__BubbleOnNewInstance (H)
+            if H then
+                table.insert(_G.__BubbleResetHooks, H);
+            end;
+        end;
+    end;
+    local H = _G.__BUBBLE_STATE;
+    do
+        local E, s = {};
+        local function b()
+            if s then
+                return;
+            end;
+            s = c.Heartbeat:Connect(function() local V = os.clock() + 8.0E-4; while E[1] and os.clock() < V do local V = E[1]; if V.cancelled or V["continue"] and not V["continue"]() then table.remove(E, 1); else local F = V.pending[#V.pending]; if not F then table.remove(E, 1); else V.pending[#V.pending] = nil; pcall(V.apply, F); local N, I = pcall(function() return F:GetChildren(); end); if N then for F, F in ipairs(I) do V.pending[#V.pending + 1] = F; end; end; if E[2] then table.remove(E, 1); E[#E + 1] = V; end; end; end; end; if not E[1] then s:Disconnect(); s = nil; end; end);
+            _G.__BubbleTrackConn (s);
+        end;
+        function _G.__BubbleWalkDescendantsBatched (V, F, N)
+            local I = {pending = {}, apply = F, ["continue"] = N, cancelled = false};
+            for N, P in ipairs((if typeof(V) == "Instance" then {V} else V) or {}) do
+                if P then
+                    F, N = pcall(function() return P:GetChildren(); end);
+                    if F then
+                        for V, V in ipairs(N) do
+                            I.pending[#I.pending + 1] = V;
+                        end;
+                    end;
+                end;
+            end;
+            E[#E + 1] = I;
+            b();
+            return function()
+                I.cancelled = true;
+            end;
+        end;
+        _G.__BubbleTrackStopper (function() for b, b in ipairs(E) do b.cancelled = true; end; E = {}; if s then s:Disconnect(); s = nil; end; end);
+    end;
+    do
+        local E, s = false, false;
+        _G.__BubbleAntiDieGuiEnabled = nil;
+        local b, V = {};
+        local function F(N, I)
+            local P = b[N];
+            if P then
+                if P.healthConn then
+                    pcall(function() P.healthConn:Disconnect(); end);
+                end;
+                if P.diedConn then
+                    pcall(function() P.diedConn:Disconnect(); end);
+                end;
+                if P.cleanupConn then
+                    pcall(function() P.cleanupConn:Disconnect(); end);
+                end;
+                b[N] = nil;
+            end;
+            if I and N and N.Parent then
+                pcall(function() local I = N:FindFirstChildOfClass("Humanoid"); if I then I.BreakJointsOnDeath = true; I:SetStateEnabled(Enum.HumanoidStateType.Dead, true); end; end);
+            end;
+        end;
+        local function N(I)
+            if not I or not I.Parent then
+                return;
+            end;
+            local P = I:FindFirstChildOfClass("Humanoid");
+            if not P then
+                return;
+            end;
+            F(I, false);
+            P.BreakJointsOnDeath = false;
+            P:SetStateEnabled(Enum.HumanoidStateType.Dead, false);
+            local k;
+            k = {humanoid = P, healthConn = P:GetPropertyChangedSignal("Health"):Connect(function() if E and b[I] == k and P.Health <= 0 then P.Health = P.MaxHealth; end; end), diedConn = P.Died:Connect(function() task.defer(function() if E and b[I] == k and P and P.Parent then P.BreakJointsOnDeath = false; P:SetStateEnabled(Enum.HumanoidStateType.Dead, false); P.Health = P.MaxHealth; end; end); end), cleanupConn = I.AncestryChanged:Connect(function() if not I.Parent then F(I, false); end; end)};
+            b[I] = k;
+        end;
+        local function I(P)
+            P = P == true;
+            if P == E then
+                return;
+            end;
+            E = P;
+            if P then
+                local P = V;
+                if not P then
+                    V = m.CharacterAdded:Connect(function(k) task.wait(0.2); if E and k and k.Parent then N(k); end; end);
+                end;
+                P = m.Character;
+                if P and P.Parent and not b[P] then
+                    N(P);
+                end;
+            else
+                for P in pairs(b) do
+                    F(P, true);
+                end;
+            end;
+        end;
+        local F = {toggle = false, autobat = false};
+        local function P()
+            if s then
+                return;
+            end;
+            local k = F.toggle;
+            I((if _G.__BubbleAntiDieGuiEnabled then _G.__BubbleAntiDieGuiEnabled () == true else k) or F.autobat);
+        end;
+        function _G.__BubbleAntiDieSource (k, x)
+            if s or F[k] == nil then
+                return;
+            end;
+            F[k] = x == true;
+            P();
+        end;
+        function _G.__BubbleAntiDieSet (k)
+            _G.__BubbleAntiDieSource ("autobat", k);
+        end;
+        function _G.__BubbleAntiDieIsEnabled ()
+            return E;
+        end;
+        _G.__BubbleTrackStopper (function() s = true; F.toggle = false; F.autobat = false; I(false); end);
+        local F, k = false, I;
+        I = function(I)
+            k(I);
+            if V and not F then
+                F = true;
+                _G.__BubbleTrackConn (V);
+            end;
+        end;
+        _G.__BubbleTrackConn (c.Heartbeat:Connect(function() if s then return; end; P(); if not E then return; end; local E = m.Character; local s = E and E.Parent and(E:FindFirstChildOfClass("Humanoid")); if not s then return; end; local V = b[E]; if not V or V.humanoid ~= s then N(E); end; if s.BreakJointsOnDeath then s.BreakJointsOnDeath = false; end; if s:GetStateEnabled(Enum.HumanoidStateType.Dead) then s:SetStateEnabled(Enum.HumanoidStateType.Dead, false); end; if s.Health <= 0 then s.Health = s.MaxHealth; end; end));
+    end;
+    FeatureToggles = FeatureToggles or {};
+    local E, s, b, V, F = {}, {Aimbot = true, ["Lagger Aimbot"] = true, Autoplay = true, Lagger = true}, {Aimbot = true, Drop = true, ["TP Down"] = true, Autoplay = true, ["ESP Players"] = true, ["Player Tracers"] = true}, {}, {};
+    for N, I in pairs(b) do
+        V[N] = false;
+        F[N] = true;
+    end;
+    if featureName == "Toggle UI" then
+        bindPill.Visible = true;
+        bindPill.Position = UDim2.new(1,- 48, 0.5,- 10);
+    end;
+    local N, I, P, k, x, _, L, z, S, g, O, n, J, f, o, q, B, j = {NormalBoost = 59, NormalSteal = 29, LaggerBoost = 40, LaggerSteal = 20, DesyncBoost = 59, DesyncSteal = 29, BypassPower = 300000, BypassDepth = 296, MobileButtonScale = 1, FOV = 90, StretchIntensity = 0.75, CypherAimbotApproachSpeed = 55, AutoTPDownHeight = 20}, {}, {Radius = 65, Duration = 1.3}, "v1", "V1", "Normal", 1, 59, 30, 40, false, "v1", false, Vector3.new(0, 0, 0), {[Enum.KeyCode.W] = true, [Enum.KeyCode.A] = true, [Enum.KeyCode.S] = true, [Enum.KeyCode.D] = true, [Enum.KeyCode.Up] = true, [Enum.KeyCode.Left] = true, [Enum.KeyCode.Down] = true, [Enum.KeyCode.Right] = true}, {SelectNormalMode = nil, SelectLaggerMode = nil, Drop = nil, Autoplay = nil, ["Toggle UI"] = nil, Aimbot = nil, ["Anti Bat"] = nil, ["Carry Speed"] = nil, BypassToggle = nil, BypassAuto = nil, FuckerToggle = nil};
+    local w, y, U, e, a, W, T, l, Z, p = {}, {}, {}, {}, false, FeaturePostToggle or {};
+    _G = _G or {};
+    _G.__BubbleDropMode = _G.__BubbleDropMode == "Jump Drop" and "Jump Drop" or "Stand Drop";
+    _G._BubbleHub_UI_Data = _G._BubbleHub_UI_Data or {};
+    local C, r = {}, {};
+    _G.__BubbleButtonsSize = 1;
+    _G.__BubbleGuiPositionResetters = {};
+    _G.__BubbleResetButtonPositions = nil;
+    _G.__BubbleGuiPositionsReset = false;
+    function _G.__BubbleRoundPanelBackground (Y, v)
+        local M = Instance.new("CanvasGroup");
+        M.Name = "RoundedBackgroundMask";
+        M.Size = UDim2.fromScale(1, 1);
+        M.Position = UDim2.fromOffset(0, 0);
+        M.BackgroundTransparency = 1;
+        M.BorderSizePixel = 0;
+        M.GroupTransparency = 0;
+        M.ZIndex = Y.ZIndex;
+        M.Parent = v;
+        local u = v:FindFirstChildOfClass("UICorner");
+        Instance.new("UICorner", M).CornerRadius = u and u.CornerRadius or(UDim.new(0, 16));
+        u = Y:FindFirstChildOfClass("UICorner");
+        if u then
+            u:Destroy();
+        end;
+        Y.Parent = M;
+    end;
+    function _G.__BubbleFramePanelBackground (Y, v, v)
+        Y.ScaleType = Enum.ScaleType.Crop;
+        if v == "Bypass" then
+            Y.Size = UDim2.new(1, 0, 1.02, 0);
+            Y.Position = UDim2.fromScale(0,- 0.02);
+        else
+            Y.Size = UDim2.fromScale(1, 1);
+            Y.Position = UDim2.fromScale(0, 0);
+        end;
+    end;
+    function _G.__BubbleAddOriginalGui3Title (Y, v)
+        if Y then
+            Y.Text = string.upper(tostring(v or "BUBBLE"));
+        end;
+    end;
+    local function Y(v, M, u, t, G, D, d)
+        local Ki = workspace.CurrentCamera;
+        local Ri = Ki and Ki.ViewportSize or(Vector2.new(1920, 1080));
+        if Ri.X <= 0 or Ri.Y <= 0 then
+            return M, t;
+        end;
+        d = d or 1;
+        G *= d;
+        D *= d;
+        local d, Ki, Xi, ci =- Ri.X * v, Ri.X * (1 - v) - G,- Ri.Y * u, Ri.Y * (1 - u) - D;
+        return math.clamp(M, d, if Ki < d then d else Ki), math.clamp(t, Xi, if ci < Xi then Xi else ci);
+    end;
+    local function v(M, u, t, G, D, d)
+        local Ki, Ri = Y(u, t, G, D, M.Size.X.Offset, M.Size.Y.Offset, d);
+        M.Position = UDim2.new(u, Ki, G, Ri);
+        return Ki, Ri;
+    end;
+    local function Y()
+        return false;
+    end;
+    local M = setmetatable({}, {__mode = "k"});
+    _G.__BubbleTrackConn (R.InputChanged:Connect(function(u) local t = M[u]; if not t then return; end; if u.UserInputType ~= Enum.UserInputType.Touch and u.UserInputType ~= Enum.UserInputType.MouseMovement then return; end; for G, G in ipairs(t) do if(u.Position - G.tapStart).Magnitude > 12 then G.tapMoved = true; end; end; end));
+    _G.__BubbleTrackConn (R.InputEnded:Connect(function(u) local t = M[u]; if not t then return; end; M[u] = nil; for u, u in ipairs(t) do if not u.tapMoved and true then if not(u.scroll and u.scrollCanvasAtStart and math.abs(u.scroll.CanvasPosition.Y - u.scrollCanvasAtStart) > 5) then u.callback(); end; end; end; end));
+    local function u(t, G)
+        if Y() then
+            return;
+        end;
+        t.InputBegan:Connect(function(t) if t.UserInputType ~= Enum.UserInputType.Touch and t.UserInputType ~= Enum.UserInputType.MouseButton1 then return; end; local D, d = Scroll, M[t]; if not d then d = {}; M[t] = d; end; table.insert(d, {tapStart = t.Position, tapMoved = false, scroll = D, scrollCanvasAtStart = D and D.CanvasPosition.Y or nil, callback = G}); end);
+    end;
+    local M, t, G, D, d = {["245,250,255"] = Color3.fromRGB(9, 24, 52), ["235,245,255"] = Color3.fromRGB(12, 34, 70), ["210,230,250"] = Color3.fromRGB(18, 48, 92), ["190,220,250"] = Color3.fromRGB(28, 78, 132), ["140,190,240"] = Color3.fromRGB(36, 108, 174), ["80,160,255"] = Color3.fromRGB(45, 140, 220), ["50,110,190"] = Color3.fromRGB(148, 220, 255), ["80,130,200"] = Color3.fromRGB(160, 225, 255), ["40,80,150"] = Color3.fromRGB(135, 210, 255), ["30,90,200"] = Color3.fromRGB(115, 200, 255), ["60,120,200"] = Color3.fromRGB(145, 215, 255), ["100,140,200"] = Color3.fromRGB(165, 225, 255)}, {"BackgroundColor3", "BorderColor3"}, {"BackgroundColor3", "TextColor3", "BorderColor3"}, {"TextColor3", "TextStrokeColor3", "TextStrokeTransparency"}, {[Enum.FontWeight.Thin] = Enum.FontWeight.ExtraLight, [Enum.FontWeight.ExtraLight] = Enum.FontWeight.Light, [Enum.FontWeight.Light] = Enum.FontWeight.Regular, [Enum.FontWeight.Regular] = Enum.FontWeight.Medium, [Enum.FontWeight.Medium] = Enum.FontWeight.SemiBold, [Enum.FontWeight.SemiBold] = Enum.FontWeight.Bold, [Enum.FontWeight.Bold] = Enum.FontWeight.ExtraBold};
+    local function Ki(Ri)
+        if not(Ri:IsA("TextLabel") or(Ri:IsA("TextButton")) or(Ri:IsA("TextBox"))) then
+            return;
+        end;
+        if Ri:GetAttribute("BubbleSlightFontWeightApplied") or(Ri:GetAttribute("BubbleSlightFontWeightPending")) then
+            return;
+        end;
+        Ri:SetAttribute("BubbleSlightFontWeightPending", true);
+        task.defer(function() if not Ri.Parent or(Ri:GetAttribute("BubbleSlightFontWeightApplied")) then Ri:SetAttribute("BubbleSlightFontWeightPending", nil); return; end; local Xi = pcall(function() local ci = Ri.FontFace; local ii = d[ci.Weight]; if ii then Ri.FontFace = Font.new(ci.Family, ii, ci.Style); end; end); Ri:SetAttribute("BubbleSlightFontWeightPending", nil); if Xi then Ri:SetAttribute("BubbleSlightFontWeightApplied", true); end; end);
+    end;
+    local d;
+    local Ri = setmetatable({}, {__mode = "k"});
+    local function Xi(ci)
+        local ii = ci;
+        while ii and not ii:IsA("GuiButton") and not ii:GetAttribute("BubbleButtonThemeControl") do
+            ii = ii.Parent;
+        end;
+        if not ii then
+            return;
+        end;
+        ii = ci:IsA("UIStroke") and "Color" or ci:IsA("UIGradient") and "Color" or ci:IsA("GuiObject") and "BackgroundColor3";
+        if not ii then
+            return;
+        end;
+        local Qi = Ri[ci];
+        if not Qi then
+            Qi = {};
+            Ri[ci] = Qi;
+            _G.__BubbleTrackConn (ci:GetPropertyChangedSignal(ii):Connect(function() Xi(ci); end));
+        end;
+        if Qi.busy then
+            return;
+        end;
+        local Ri = ci[ii];
+        if Ri == Qi.applied and Qi.theme == _G.__BubbleGuiTheme then
+            return;
+        end;
+        if Ri ~= Qi.applied then
+            Qi.original = Ri;
+        end;
+        local hi = _G.__BubbleGuiTheme;
+        local function mi(Ai)
+            if hi ~= "GUI 2" and hi ~= "GUI 3" then
+                return Ai;
+            end;
+            local Hi = math.max(Ai.R, Ai.G, Ai.B);
+            return Color3.fromRGB(7, 22, 48):Lerp(Color3.fromRGB(125, 215, 255), Hi);
+        end;
+        local Ai = Qi.original;
+        if ci:IsA("UIGradient") then
+            if hi == "GUI 2" or hi == "GUI 3" then
+                local Hi = {};
+                for Ei, Ei in ipairs(Ai.Keypoints) do
+                    table.insert(Hi, ColorSequenceKeypoint.new(Ei.Time, mi(Ei.Value)));
+                end;
+                Ai = (ColorSequence.new(Hi));
+            end;
+        else
+            Ai = (mi(Ai));
+        end;
+        Qi.applied = Ai;
+        Qi.theme = hi;
+        if Ri ~= Ai then
+            Qi.busy = true;
+            ci[ii] = Ai;
+            Qi.busy = false;
+        end;
+    end;
+    d = function(Ri)
+        if not Ri then
+            return;
+        end;
+        local ci;
+        if Ri:IsA("TextLabel") or(Ri:IsA("TextButton")) or(Ri:IsA("TextBox")) then
+            Ki(Ri);
+            ci = G;
+        else
+            ci = if Ri:IsA("GuiObject") then
+                t
+            else
+                ci;
+            end;
+            if ci then
+                for G, ii in ipairs(ci) do
+                    G = Ri[ii];
+                    local Qi = string.format("%d,%d,%d", math.floor(G.R * 255 + 0.5), math.floor(G.G * 255 + 0.5), math.floor(G.B * 255 + 0.5));
+                    if M[Qi] then
+                        Ri[ii] = M[Qi];
+                    end;
+                end;
+            end;
+            if Ri:IsA("UIStroke") then
+                ci = Ri.Color;
+                local G = string.format("%d,%d,%d", math.floor(ci.R * 255 + 0.5), math.floor(ci.G * 255 + 0.5), math.floor(ci.B * 255 + 0.5));
+                if ci.B > ci.R + 12 and ci.B >= ci.G then
+                    Ri.Color = Color3.fromRGB(0, 0, 0);
+                elseif M[G] then
+                    Ri.Color = M[G];
+                end;
+            end;
+            if not _G.__BubbleModernGuiActive and not Ri:GetAttribute("BubbleDarkPaletteWatched") then
+                Ri:SetAttribute("BubbleDarkPaletteWatched", true);
+                local function M(G)
+                    _G.__BubbleTrackConn (Ri:GetPropertyChangedSignal(G):Connect(function() d(Ri); end));
+                end;
+                if Ri:IsA("UIStroke") then
+                    M("Color");
+                elseif Ri:IsA("GuiObject") then
+                    for G, G in ipairs(t) do
+                        M(G);
+                    end;
+                    if Ri:IsA("TextLabel") or(Ri:IsA("TextButton")) or(Ri:IsA("TextBox")) then
+                        for t, t in ipairs(D) do
+                            M(t);
+                        end;
+                    end;
+                end;
+            end;
+            Xi(Ri);
+        end;
+        _G.__BubbleThemeRoots = {};
+        local M = setmetatable({}, {__mode = "k"});
+        function _G.__BubbleRegisterThemeRoot (t)
+            if not t then
+                return;
+            end;
+            for G, G in ipairs(_G.__BubbleThemeRoots) do
+                if G == t then
+                    return;
+                end;
+            end;
+            table.insert(_G.__BubbleThemeRoots, t);
+            d(t);
+            if M[t] then
+                M[t]();
+            end;
+            M[t] = _G.__BubbleWalkDescendantsBatched (t, d, function() return t.Parent ~= nil; end);
+            _G.__BubbleTrackConn (t.DescendantAdded:Connect(d));
+        end;
+        function _G.__BubbleApplyTheme ()
+            for t, t in ipairs(_G.__BubbleThemeRoots) do
+                if t and t.Parent then
+                    d(t);
+                    if M[t] then
+                        M[t]();
+                    end;
+                    M[t] = _G.__BubbleWalkDescendantsBatched (t, d, function() return t.Parent ~= nil; end);
+                end;
+            end;
+        end;
+        function _G.__BubbleAddUnifiedPanelShade (M, t, G)
+            local D = M and(M:FindFirstChild("UnifiedBackgroundShade"));
+            if D then
+                D:Destroy();
+            end;
+            D = M and(M:FindFirstChild("UnifiedPanelWhiteOutline"));
+            if D then
+                D:Destroy();
+            end;
+            D = M and(M:FindFirstChild("UnifiedPanelWhiteGlow"));
+            if D then
+                D:Destroy();
+            end;
+            D = Instance.new("Frame");
+            D.Name = "UnifiedBackgroundShade";
+            D.Size = UDim2.fromScale(1, 1);
+            D.Position = UDim2.fromScale(0, 0);
+            D.BackgroundColor3 = Color3.fromRGB(0, 0, 0);
+            D.BackgroundTransparency = 0.68;
+            D.BorderSizePixel = 0;
+            D.Active = false;
+            D.ZIndex = G or 1;
+            D.Parent = M;
+            Instance.new("UICorner", D).CornerRadius = UDim.new(0, t or 16);
+            G = Instance.new("UIGradient", D);
+            G.Rotation = 90;
+            G.Transparency = NumberSequence.new({NumberSequenceKeypoint.new(0, 0.28), NumberSequenceKeypoint.new(0.55, 0.42), NumberSequenceKeypoint.new(1, 0.56)});
+            return D;
+        end;
+        local M = {[Enum.UserInputType.Gamepad1] = true, [Enum.UserInputType.Gamepad2] = true, [Enum.UserInputType.Gamepad3] = true, [Enum.UserInputType.Gamepad4] = true, [Enum.UserInputType.Gamepad5] = true, [Enum.UserInputType.Gamepad6] = true, [Enum.UserInputType.Gamepad7] = true, [Enum.UserInputType.Gamepad8] = true};
+        local function t(G)
+            return G and G.KeyCode and G.KeyCode ~= Enum.KeyCode.Unknown and(G.UserInputType == Enum.UserInputType.Keyboard or M[G.UserInputType]);
+        end;
+        local function G(D)
+            return D and D.UserInputType == Enum.UserInputType.Keyboard and D.KeyCode == Enum.KeyCode.RightControl;
+        end;
+        local D, d = {}, {MB3 = "Mouse3"};
+        pcall(function() D[Enum.UserInputType.MouseButton3] = "MB3"; end);
+        local function Ri(Xi)
+            return Xi and D[Xi.UserInputType] ~= nil;
+        end;
+        local function Xi(ci)
+            return D[ci.UserInputType];
+        end;
+        local function D(ci)
+            if not ci then
+                return "-";
+            end;
+            if type(ci) == "string" then
+                return d[ci] or ci;
+            end;
+            return tostring(ci):match("KeyCode%.(.+)") or(tostring(ci));
+        end;
+        b = {["Inf Jump"] = false, ["Anti Bat"] = false, ["TP Down"] = false, ["Auto TP Down"] = false, ["Anti Ragdoll"] = false, ["Ragdoll Counter"] = false, ["Medusa Counter"] = false, Aimbot = false, ["Lagger Aimbot"] = false, Autoplay = false, Drop = false, ["auto steal"] = false, ["ESP Players"] = false, ["Player Tracers"] = false, ["Show Buttons"] = false, ["Lock Buttons"] = false, ["Show FPS"] = false, ["FPS Boost"] = false, ["Anti Lag"] = false, Optimizer = true, Lagger = false, Bypass = false, ["Speed Boost"] = true, ["Toggle UI"] = true, ["Auto Steal Speed"] = false, ["Auto Carry Speed"] = false, ["Carry Speed"] = false, Unwalk = false, ["Harder Hit Anim"] = false, Animaciones = false, ["Custom FOV"] = false, ["Stretchz Res"] = false, ["Sky Changer"] = false, ["Skin Changer"] = false, ["Headless Visual"] = false, ["Korblox Visual"] = false, ["Anti Die"] = false};
+        for ci, ii in pairs(b) do
+            E[ci] = ii;
+        end;
+        local ci, ii;
+        local Qi = 0;
+        local function hi(mi)
+            if not mi or mi == ci then
+                return;
+            end;
+            pcall(writefile, "BubbleHub_UI_Config.txt", mi);
+            ci = mi;
+        end;
+        local function mi()
+            local Ai = {};
+            for Hi, Ei in pairs(E) do
+                if not s[Hi] then
+                    table.insert(Ai, "T:" .. Hi .. "=" .. tostring(Ei));
+                end;
+            end;
+            for Hi, Ei in pairs(V) do
+                table.insert(Ai, "S:" .. Hi .. "=" .. tostring(Ei));
+            end;
+            for Hi, Ei in pairs(F) do
+                table.insert(Ai, "B:" .. Hi .. "=" .. tostring(Ei));
+            end;
+            for Hi, Ei in pairs(N) do
+                table.insert(Ai, "V:" .. Hi .. "=" .. tostring(Ei));
+            end;
+            for Hi, Ei in pairs(P) do
+                table.insert(Ai, "A:" .. Hi .. "=" .. tostring(Ei));
+            end;
+            for Hi, Hi in ipairs(I) do
+                table.insert(Ai, "C:" .. Hi.name .. "=" .. Hi.boost .. "," .. Hi.steal);
+            end;
+            if _G.__BubbleHub_Anims then
+                for Hi, Ei in pairs(_G.__BubbleHub_Anims) do
+                    table.insert(Ai, "N:" .. Hi .. "=" .. Ei);
+                end;
+            end;
+            table.insert(Ai, "M:selectedMode=" .. _);
+            table.insert(Ai, "M:optimizerMode=Normal");
+            table.insert(Ai, "M:autoplayMode=" .. (_G.__autoplayMode or "Full"));
+            table.insert(Ai, "M:skyIndex=" .. tostring(_G.__skyGetIndex and(_G.__skyGetIndex ()) or 1));
+            table.insert(Ai, "M:skyMode=" .. tostring(_G.__BubbleSkyChangerMode or "blue"));
+            table.insert(Ai, "M:katanaIndex=" .. tostring(_G.__katanaGetIndex and(_G.__katanaGetIndex ()) or 1));
+            table.insert(Ai, "M:autoStealMode=" .. (k == "v2" and "v2" or "v1"));
+            table.insert(Ai, "M:carrySpeedMode=" .. (n or "v1"));
+            table.insert(Ai, "M:dropMode=" .. (_G.__BubbleDropMode == "Jump Drop" and "Jump Drop" or "Stand Drop"));
+            table.insert(Ai, "M:infJumpMode=" .. (_G.__BubbleInfJumpMode or "hold"));
+            table.insert(Ai, "M:panelVisible=" .. tostring(_G.__BubblePanelVisible ~= false));
+            table.insert(Ai, "M:batVersion=" .. tostring(_G.__batVersion or 1));
+            table.insert(Ai, "M:skinChangerMode=" .. x);
+            table.insert(Ai, "M:buttonsSize=" .. tostring(_G.__BubbleButtonsSize or 1));
+            table.insert(Ai, "M:tpBatV2Distance=" .. tostring(math.clamp(tonumber(_G.__tpBatV2Distance) or 8, 0, 100)));
+            if _G.__BubbleAnimationPreset then
+                table.insert(Ai, "M:animationPreset=" .. tostring(_G.__BubbleAnimationPreset));
+            end;
+            table.insert(Ai, "M:guiTheme=" .. tostring(_G.__BubbleGuiTheme or "GUI 1"));
+            table.insert(Ai, "M:themePrimary=" .. (_G.__BubbleThemePrimary or "BLACK"));
+            table.insert(Ai, "M:themeSecondary=" .. (_G.__BubbleThemeSecondary or "BLUE"));
+            table.insert(Ai, "M:autoGrabExpanded=" .. tostring(_G._BubbleHub_UI_AutoGrabExpanded ~= false));
+            for Hi, Ei in pairs(q) do
+                if Ei then
+                    local si = if type(Ei) == "string" then
+                        Ei
+                    else
+                        tostring(Ei):match("KeyCode%.(.+)") or(tostring(Ei));
+                        table.insert(Ai, "K:" .. Hi .. "=" .. si);
+                    end;
+                end;
+                if _G._BubbleHub_UI_MenuPos then
+                    local Hi = _G._BubbleHub_UI_MenuPos;
+                    if Hi.x and Hi.y then
+                        table.insert(Ai, "P:menuPos=" .. math.floor(Hi.x) .. "," .. math.floor(Hi.y));
+                    end;
+                end;
+                table.insert(Ai, "M:introMusicIndex=" .. tostring(L));
+                table.insert(Ai, "M:bgIndex=" .. tostring(_G._BubbleHub_UI_BgIndex or 1));
+                if _G.__toggleBtn then
+                    table.insert(Ai, "P:toggleBtn=" .. math.floor(_G.__toggleBtn.Position.X.Offset) .. "," .. math.floor(_G.__toggleBtn.Position.Y.Offset));
+                end;
+                for Hi, Ei in pairs(C) do
+                    if Ei.x and Ei.y then
+                        table.insert(Ai, "P:mobileBtn_" .. Hi .. "=" .. math.floor(Ei.x) .. "," .. math.floor(Ei.y) .. (if Ei.xs and Ei.ys then ":" .. Ei.xs .. ":" .. Ei.ys else ""));
+                    end;
+                end;
+                for Hi, Ei in pairs(r) do
+                    if Ei.x and Ei.y then
+                        table.insert(Ai, "P:quickBtn_" .. Hi .. "=" .. math.floor(Ei.x) .. "," .. math.floor(Ei.y));
+                    end;
+                end;
+                if _G._BubbleHub_UI_SpeedFramePos then
+                    local Hi = _G._BubbleHub_UI_SpeedFramePos;
+                    if Hi.x and Hi.y then
+                        table.insert(Ai, "P:speedFrame=" .. math.floor(Hi.x) .. "," .. math.floor(Hi.y));
+                    end;
+                end;
+                if _G._BubbleHub_EnemyWidget_SaveHook then
+                    pcall(_G._BubbleHub_EnemyWidget_SaveHook);
+                end;
+                if _G._BubbleHub_UI_EnemyWidgetPos then
+                    local Hi = _G._BubbleHub_UI_EnemyWidgetPos;
+                    if Hi.x and Hi.y then
+                        table.insert(Ai, "P:enemyWidget=" .. math.floor(Hi.x) .. "," .. math.floor(Hi.y));
+                    end;
+                end;
+                if _G._BubbleHub_UI_AutoGrabBarPos then
+                    local Hi = _G._BubbleHub_UI_AutoGrabBarPos;
+                    if Hi.x and Hi.y then
+                        table.insert(Ai, "P:autoGrabBar=" .. math.floor(Hi.x) .. "," .. math.floor(Hi.y));
+                    end;
+                end;
+                if _G._BubbleHub_UI_AutoGrabBarSize then
+                    table.insert(Ai, "P:autoGrabBarSize=" .. tostring(_G._BubbleHub_UI_AutoGrabBarSize));
+                end;
+                if _G._BubbleHub_UI_ModernMiniPos then
+                    local Hi = _G._BubbleHub_UI_ModernMiniPos;
+                    if Hi.x and Hi.y then
+                        table.insert(Ai, "P:modernMini=" .. math.floor(Hi.x) .. "," .. math.floor(Hi.y));
+                    end;
+                end;
+                local Hi = table.concat(Ai, "\10");
+                if Hi == ci or Hi == ii then
+                    return;
+                end;
+                ii = Hi;
+                _G._BubbleHub_UI_Data = Hi;
+                Qi += 1;
+                local ci = Qi;
+                task.delay(0.2, function() if ci ~= Qi or ii ~= Hi then return; end; ii = nil; hi(Hi); end);
+            end;
+            _G.__BubbleTrackStopper (function() if ii then hi(ii); ii = nil; end; end);
+            function FeatureToggles.BypassAuto()
+                if _G.BubbleBypass and _G.BubbleBypass.SetBypass and _G.BubbleBypass.IsEnabled then
+                    local ci = _G.BubbleBypass.IsEnabled() == true;
+                    pcall(_G.BubbleBypass.SetBypass, not ci);
+                    pcall(function() if _G.__syncBypassVisual then _G.__syncBypassVisual (); end; end);
+                else
+                    if _G.__openBypassGUI then
+                        _G.__openBypassGUI ();
+                    end;
+                    task.spawn(function() for ci = 1, 20, 1 do task.wait(0.1); if _G.BubbleBypass and _G.BubbleBypass.SetBypass and _G.BubbleBypass.IsEnabled then break; end; end; if _G.BubbleBypass and _G.BubbleBypass.SetBypass and _G.BubbleBypass.IsEnabled then local ci = _G.BubbleBypass.IsEnabled() == true; pcall(_G.BubbleBypass.SetBypass, not ci); end; pcall(function() if _G.__syncBypassVisual then _G.__syncBypassVisual (); end; end); end);
+                end;
+            end;
+            local function ci(ii)
+                local Qi, hi = {"Aimbot", "TP Bat"}, false;
+                for Ai, Hi in ipairs(Qi) do
+                    if Hi ~= ii and Hi ~= "TP Bat" and E[Hi] then
+                        E[Hi] = false;
+                        Ai = e[Hi];
+                        if Ai then
+                            pcall(Ai, false);
+                        end;
+                        if W[Hi] then
+                            pcall(W[Hi], false);
+                        end;
+                        hi = true;
+                    end;
+                end;
+                if hi then
+                    mi();
+                end;
+            end;
+            function _G.__deactivateBatExclusive (ii)
+                local Qi, hi = {"Aimbot", "TP Bat"}, false;
+                for Ai, Hi in ipairs(Qi) do
+                    if Hi ~= ii and Hi ~= "TP Bat" and E[Hi] then
+                        E[Hi] = false;
+                        Ai = e[Hi];
+                        if Ai then
+                            pcall(Ai, false);
+                        end;
+                        if W[Hi] then
+                            pcall(W[Hi], false);
+                        end;
+                        hi = true;
+                    end;
+                end;
+                if hi then
+                    mi();
+                end;
+            end;
+            (function() local ii, Qi = pcall(readfile, "BubbleHub_UI_Config.txt"); local hi = if ii and Qi and #Qi > 0 then Qi else if _G._BubbleHub_UI_Data and #_G._BubbleHub_UI_Data > 0 then _G._BubbleHub_UI_Data else nil; if not hi then return; end; for Ai in hi:gmatch("[^\10]+") do local hi, Hi, Ei = Ai:sub(1, 2), Ai:sub(3):match("([^=]+)=(.+)"); if Hi and Ei then Hi, Ei = Hi:match("^%s*(.-)%s*$"), Ei:match("^%s*(.-)%s*$"); if hi == "T:" and E[Hi] ~= nil and not s[Hi] then E[Hi] = Ei == "true"; elseif hi == "S:" then V[Hi] = Ei == "true"; elseif hi == "B:" then F[Hi] = Ei == "true"; elseif hi == "V:" and N[Hi] ~= nil then Qi = tonumber(Ei); if Qi then N[Hi] = Qi; if Hi == "NormalBoost" then z = Qi; end; if Hi == "NormalSteal" then S = Qi; end; if Hi == "LaggerBoost" then g = Qi; end; end; elseif hi == "N:" then _G.__savedAnimations = _G.__savedAnimations or {}; _G.__savedAnimations [Hi] = Ei; elseif hi == "M:" then if Hi == "introMusicIndex" then L = tonumber(Ei) or 2; elseif Hi == "bgIndex" then _G._BubbleHub_UI_BgIndex = tonumber(Ei); elseif Hi == "selectedMode" then Ai = Ei == "Normal" or Ei == "Lagger" or Ei == "Desync"; if Ai then _ = Ei; end; elseif Hi == "autoplayMode" then if Ei == "Full" or Ei == "Semi" then _G.__autoplayMode = Ei; end; elseif Hi == "skyIndex" then _G.__savedSkyIndex = tonumber(Ei); elseif Hi == "skyMode" then if Ei == "day" or Ei == "blue" or Ei == "night" then _G.__BubbleSkyChangerMode = Ei; end; elseif Hi == "katanaIndex" then _G.__savedKatanaIndex = tonumber(Ei); elseif Hi == "autoStealMode" then if Ei == "v3" then Ei = "v1"; end; ii = Ei == "v1" or Ei == "v2"; if ii then k = Ei; end; elseif Hi == "carrySpeedMode" then local s = Ei == "v1" or Ei == "v2"; if s then n = Ei; end; elseif Hi == "optimizerMode" then if Ei == "Normal" or Ei == "Ultra" then _G.__optimizerMode = Ei; end; elseif Hi == "dropMode" then _G.__BubbleDropMode = Ei == "Jump Drop" and "Jump Drop" or "Stand Drop"; elseif Hi == "infJumpMode" then if Ei == "hold" or Ei == "manual" then _G.__BubbleInfJumpMode = Ei; end; elseif Hi == "autoGrabExpanded" then _G._BubbleHub_UI_AutoGrabExpanded = Ei == "true"; elseif Hi == "panelVisible" then _G.__BubblePanelVisible = Ei == "true"; E["Toggle UI"] = _G.__BubblePanelVisible; elseif Hi == "themePrimary" then if Ei == "BLACK" or Ei == "WHITE" then _G.__BubbleThemePrimary = Ei; end; elseif Hi == "themeSecondary" then if Ei == "BLUE" or Ei == "RED" or Ei == "CONTRAST" then _G.__BubbleThemeSecondary = Ei; end; elseif Hi == "buttonsSize" then local s = tonumber(Ei); if s and s == s and math.abs(s) < math.huge then _G.__BubbleButtonsSize = math.clamp(s, 0.5, 2); end; elseif Hi == "skinChangerMode" then x = (Ei == "V2" or Ei == "V3") and Ei or "V1"; elseif Hi == "batVersion" then _G.__batVersion = tonumber(Ei) == 2 and 2 or 1; if _G.__batVersionPill then _G.__batVersionPill.Text = "V" .. tostring(_G.__batVersion or 1); end; elseif Hi == "tpBatV2Distance" then _G.__tpBatV2Distance = math.clamp(tonumber(Ei) or 8, 0, 100); elseif Hi == "animationPreset" then _G.__BubbleAnimationPreset = Ei; elseif Hi == "guiTheme" then _G.__BubbleGuiTheme = "GUI 1"; end; elseif hi == "A:" and P[Hi] ~= nil then local s = tonumber(Ei); if s then P[Hi] = s; end; elseif hi == "C:" then local s, V = Ei:match("([^,]+),([^,]+)"); if s and V then table.insert(I, {name = Hi, boost = tonumber(s) or 59, steal = tonumber(V) or 29}); end; elseif hi == "K:" then if d[Ei] then q[Hi] = Ei; else local s, V = pcall(function() return Enum.KeyCode[Ei]; end); if s then q[Hi] = V; end; end; elseif hi == "P:" then if Hi == "menuPos" then local s, V = Ei:match("(-?%d+),(-?%d+)"); if s and V then _G._BubbleHub_UI_MenuPos = {x = tonumber(s), y = tonumber(V)}; end; elseif Hi == "toggleBtn" then local s, V = Ei:match("(-?%d+),(-?%d+)"); if s and V then _G._BubbleHub_UI_BtnPos = {x = tonumber(s), y = tonumber(V)}; end; elseif Hi == "speedFrame" then local s, V = Ei:match("(-?%d+),(-?%d+)"); if s and V then _G._BubbleHub_UI_SpeedFramePos = {x = tonumber(s), y = tonumber(V)}; end; elseif Hi == "enemyWidget" then local s, V = Ei:match("(-?%d+),(-?%d+)"); if s and V then _G._BubbleHub_UI_EnemyWidgetPos = {x = tonumber(s), y = tonumber(V)}; end; elseif Hi == "autoGrabBar" then local s, V = Ei:match("(-?%d+),(-?%d+)"); if s and V then _G._BubbleHub_UI_AutoGrabBarPos = {x = tonumber(s), y = tonumber(V)}; end; elseif Hi == "autoGrabBarSize" then local s = tonumber(Ei); if s then _G._BubbleHub_UI_AutoGrabBarSize = s; end; elseif Hi == "modernMini" then local s, V = Ei:match("(-?%d+),(-?%d+)"); if s and V then _G._BubbleHub_UI_ModernMiniPos = {x = tonumber(s), y = tonumber(V)}; end; else local s = Hi:match("^quickBtn_(.+)$"); if s then local V, F = Ei:match("^(-?%d+),(-?%d+)"); if V and F then r[s] = {x = tonumber(V), y = tonumber(F)}; end; else local s = Hi:match("^mobileBtn_(.+)$"); if s then local V, F = Ei:match("^(-?%d+),(-?%d+)"); if V and F then _G._BubbleHub_UI_MobileBtnPos = _G._BubbleHub_UI_MobileBtnPos or {}; local L, ii, Qi = {x = tonumber(V), y = tonumber(F)}, Ei:match(":(-?%d+):(-?%d+)$"); if ii and Qi then L.xs = tonumber(ii); L.ys = tonumber(Qi); end; _G._BubbleHub_UI_MobileBtnPos [s] = L; end; end; end; end; end; end; end; end)();
+            E["Speed Boost"] = true;
+            b = {"Speed Boost", "auto steal", "Auto Carry Speed", "Inf Jump", "Unwalk", "Auto TP Down", "Anti Ragdoll", "Ragdoll Counter", "Medusa Counter", "Anti Die", "Anti Lag", "Optimizer", "ESP Players", "Player Tracers", "Stretchz Res", "Custom FOV", "Sky Changer", "Headless Visual", "Korblox Visual", "Show Buttons", "Lock Buttons", "Skin Changer", "Autoplay"};
+            for s, s in ipairs(b) do
+                q[s] = nil;
+            end;
+            mi();
+            if type(_G.__BubblePanelVisible) == "boolean" then
+                E["Toggle UI"] = _G.__BubblePanelVisible;
+            else
+                _G.__BubblePanelVisible = E["Toggle UI"] ~= false;
+                E["Toggle UI"] = _G.__BubblePanelVisible;
+            end;
+            if k ~= "v1" and k ~= "v2" then
+                k = "v1";
+            end;
+            _G.__batVersion = tonumber(_G.__batVersion) == 2 and 2 or 1;
+            _G.__tpBatV2Distance = math.clamp(tonumber(_G.__tpBatV2Distance) or 8, 0, 100);
+            J = _ == "Lagger";
+            O = E["Carry Speed"];
+            E["TP Bat"] = false;
+            E.Korblox = false;
+            pcall(function() local s = m.Character; if not s then return; end; for V, V in ipairs(s:GetChildren()) do if V.Name:find("^SkinChanger_") or V.Name == "Korblox_RightLeg" then V:Destroy(); end; end; local V = {"RightUpperLeg", "RightLowerLeg", "RightFoot"}; for F, L in ipairs(V) do F = s:FindFirstChild(L); if F and(F:IsA("BasePart")) then F.Transparency = 0; F.CanCollide = true; end; end; end);
+            E.Autoplay = false;
+            E.Lagger = false;
+            C = _G._BubbleHub_UI_MobileBtnPos or {};
+            _G.__BubbleModernGuiActive = true;
+            local s = game:GetService("CoreGui");
+            b = m.PlayerGui:FindFirstChild("BUBBLE_Panel") or(s:FindFirstChild("BUBBLE_Panel"));
+            if b then
+                b:Destroy();
+            end;
+            local V = Instance.new("ScreenGui");
+            V.Name = "BubbleHub";
+            V.Enabled = false;
+            V.ResetOnSpawn = false;
+            V.ZIndexBehavior = Enum.ZIndexBehavior.Sibling;
+            V.DisplayOrder = 9999999;
+            V.IgnoreGuiInset = true;
+            pcall(function() V.Parent = s; end);
+            if not V.Parent then
+                V.Parent = m.PlayerGui;
+            end;
+            local s = workspace.CurrentCamera.ViewportSize;
+            GUI_METRICS = {sectionPad = A and 4 or 6, sectionGap = A and 4 or 6, sectionHeaderH = A and 16 or 20, toggleH = A and 44 or 62, compactRowH = A and 30 or 36, compactCardH = A and 28 or 32, toggleTextSize = A and 9 or 10, bindW = A and 34 or 40, bindH = A and 16 or 20, bindTextSize = A and 8 or 9};
+            local F, L, C = A and(math.clamp(math.floor(s.X * 0.42), 165, 205)) or(math.min(340, math.floor(s.X * 0.52))), A and(math.clamp(math.floor(s.Y * 0.52), 200, 310)) or(math.min(520, math.floor(s.Y * 0.8))), Instance.new("Frame");
+            C.Name = "Panel";
+            C.Active = true;
+            C.Size = UDim2.new(0, F, 0, L);
+            b = _G._BubbleHub_UI_MenuPos;
+            if b then
+                local ii, Qi = v(C, 0, b.x, 0, b.y);
+                C.Position = UDim2.new(0, ii, 0, Qi);
+            else
+                C.Position = UDim2.new(1,- F - 20, 0.5,- L / 2);
+            end;
+            C.BackgroundTransparency = 1;
+            C.BorderSizePixel = 0;
+            C.Visible = false;
+            C.Parent = V;
+            local ii = Instance.new("Frame");
+            ii.Name = "LegacyHeaderStub";
+            ii.BackgroundTransparency = 1;
+            ii.Visible = false;
+            ii.Parent = C;
+            T = Instance.new("TextLabel");
+            T.BackgroundTransparency = 1;
+            T.Visible = false;
+            T.Parent = ii;
+            l = Instance.new("TextLabel");
+            l.BackgroundTransparency = 1;
+            l.Visible = false;
+            l.Parent = ii;
+            local Qi = Instance.new("Frame");
+            Qi.Name = "LegacyContentStub";
+            Qi.BackgroundTransparency = 1;
+            Qi.Visible = false;
+            Qi.Parent = C;
+            local hi, Ai = {((function() local Hi; pcall(function() Hi = typeof(getcustomasset) == "function" and getcustomasset or typeof(getsynasset) == "function" and getsynasset; end); if not Hi or typeof(writefile) ~= "function" or typeof(isfile) ~= "function" then return "rbxassetid://114056083769059"; end; local Ei = false; pcall(function() Ei = isfile("BubbleHub_42ym9r.jpg"); end); if not Ei then local Ei, si = pcall(function() return game:HttpGet("https://files.catbox.moe/42ym9r.jpg"); end); if not Ei or type(si) ~= "string" or #si < 100 then return "rbxassetid://114056083769059"; end; if not pcall(writefile, "BubbleHub_42ym9r.jpg", si) then return "rbxassetid://114056083769059"; end; end; local Ei, si = pcall(Hi, "BubbleHub_42ym9r.jpg"); if Ei and type(si) == "string" and si ~= "" then return si; end; return "rbxassetid://114056083769059"; end)())}, tonumber(_G._BubbleHub_UI_BgIndex) or 1;
+            local Hi, Ei = type(Ai) ~= "number" or Ai < 1;
+            if Hi then
+                Ei = Hi;
+            else
+                ii = #hi;
+                Ei = Ai > ii;
+            end;
+            if Ei then
+                Ai = 1;
+            end;
+            local si = Instance.new("ImageLabel");
+            si.Name = "LegacyBackgroundStub";
+            si.BackgroundTransparency = 1;
+            si.Image = hi[Ai];
+            si.Visible = false;
+            si.Parent = C;
+            local bi = Instance.new("TextButton");
+            bi.Name = "LegacyBackgroundButtonStub";
+            bi.Visible = false;
+            bi.Parent = C;
+            do
+                local Vi, Fi;
+                local Ni, Ii = false;
+                local function Pi(ki)
+                    pcall(function() if _G.__BubblePreserveOptimizerUI (ki) then return; end; local xi, _i = pcall(function() return ki:IsDescendantOf(game:GetService("Lighting")); end); if xi and _i then return; end; if ki:IsA("Sky") or(ki:IsA("Atmosphere")) or(ki:IsA("ColorCorrectionEffect")) or(ki:IsA("BloomEffect")) or(ki:IsA("BlurEffect")) or(ki:IsA("SunRaysEffect")) or(ki:IsA("DepthOfFieldEffect")) then return; end; _i, xi = pcall(function() local Li = ki; while Li and Li ~= workspace do if Li.Name == "Headless_Headless" or(Li.Name:find("^Korblox_")) then return true; end; Li = Li.Parent; end; return false; end); if _i and xi then return; end; if ki:IsA("Accessory") or(ki:IsA("Hat")) then ki:Destroy(); elseif ki:IsA("Shirt") or(ki:IsA("Pants")) or(ki:IsA("ShirtGraphic")) or(ki:IsA("BodyColors")) or(ki:IsA("CharacterMesh")) then ki:Destroy(); elseif ki:IsA("BasePart") then ki.Material = Enum.Material.Plastic; ki.Reflectance = 0; ki.CastShadow = false; elseif ki:IsA("Decal") or(ki:IsA("Texture")) then ki.Transparency = 1; elseif ki:IsA("ParticleEmitter") or(ki:IsA("Trail")) or(ki:IsA("Beam")) or(ki:IsA("Fire")) or(ki:IsA("Smoke")) or(ki:IsA("Sparkles")) then ki.Enabled = false; elseif ki:IsA("AnimationController") or(ki:IsA("Animator")) then _i = ki.Parent; while _i and _i ~= workspace do if _i:IsA("Model") and(K:GetPlayerFromCharacter(_i)) then return; end; _i = _i.Parent; end; for xi, xi in ipairs(ki:GetPlayingAnimationTracks()) do pcall(function() xi:Stop(0); end); end; end; end);
+                end;
+                local function ki()
+                    if Ii then
+                        Ii();
+                    end;
+                    Ii = _G.__BubbleWalkDescendantsBatched (workspace, Pi, function() return Ni; end);
+                end;
+                local function xi()
+                    if Ni then
+                        return;
+                    end;
+                    Ni = true;
+                    if Vi then
+                        Vi:Disconnect();
+                    end;
+                    Vi = workspace.DescendantAdded:Connect(function(_i) if Ni then Pi(_i); end; end);
+                    ki();
+                    if Fi then
+                        Fi:Disconnect();
+                    end;
+                    Fi = m.CharacterAdded:Connect(function(ki) task.wait(0.5); if Ni then _G.__BubbleWalkDescendantsBatched (ki, Pi, function() return Ni; end); end; end);
+                end;
+                local function Pi()
+                    if not Ni then
+                        return;
+                    end;
+                    Ni = false;
+                    if Ii then
+                        Ii();
+                        Ii = nil;
+                    end;
+                    if Vi then
+                        Vi:Disconnect();
+                        Vi = nil;
+                    end;
+                    if Fi then
+                        Fi:Disconnect();
+                        Fi = nil;
+                    end;
+                end;
+                _G.__refreshFPSBoost = xi;
+                _G.__stopFPSBoost = Pi;
+                W["FPS Boost"] = function(Vi)
+                    if Vi then
+                        xi();
+                    else
+                        Pi();
+                    end;
+                end;
+            end;
+            (function() local Vi, Fi, Ni, Ii, Pi, ki, xi = false, 0, {}, setmetatable({}, {__mode = "k"}), {}, setmetatable({}, {__mode = "k"}), setmetatable({}, {__mode = "k"}); local _i; local function Li(zi, Si, gi) pcall(function() local Oi = zi[Si]; if Oi == gi then return; end; zi[Si] = gi; local gi = Ii[zi]; if not gi then gi = {}; Ii[zi] = gi; end; if not gi[Si] then gi[Si] = {value = Oi}; end; end); end; local function zi(Si) local gi = m.Character; if gi and(Si == gi or(Si:IsDescendantOf(gi))) then return true; end; gi = Si; while gi and gi ~= workspace do if gi:IsA("LayerCollector") or(gi:IsA("GuiObject")) or(gi:IsA("GuiBase2d")) then return true; end; local Oi = gi.Name or ""; if Oi:match("^Bubble") or(Oi:match("^__Bubble")) or(Oi:match("^Bubble")) or(Oi:match("^ESP_")) or(Oi:match("^SkinChanger_")) or(Oi:match("^Korblox_")) or Oi == "Headless_Headless" or Oi == "GreenDuelsBB" or Oi == "PredictionSphere" then return true; end; gi = gi.Parent; end; if E["Sky Changer"] and(Si == Q or(Si:IsDescendantOf(Q))) then return true; end; return false; end; local function Si(gi) if ki[gi] then return; end; local Oi = m.Character; if Oi and(gi:IsDescendantOf(Oi)) then return; end; ki[gi] = true; local Oi = Fi; local ni, Ji = pcall(function() return gi.AnimationPlayed:Connect(function(fi) if not Vi or Fi ~= Oi then return; end; task.defer(function() if Vi and Fi == Oi then pcall(function() fi:Stop(0); end); end; end); end); end); if ni then table.insert(Ni, Ji); end; pcall(function() for Oi, Oi in ipairs(gi:GetPlayingAnimationTracks()) do if Oi.IsPlaying then xi[Oi] = {animator = gi, time = Oi.TimePosition, speed = Oi.Speed}; Oi:Stop(0); end; end; end); end; local function gi(Oi) if not Vi or(zi(Oi)) then return; end; if Oi:IsA("Terrain") then Li(Oi, "Decoration", false); Li(Oi, "WaterWaveSize", 0); Li(Oi, "WaterWaveSpeed", 0); Li(Oi, "WaterReflectance", 0); Li(Oi, "WaterTransparency", 1); end; if Oi:IsA("BasePart") then Li(Oi, "Material", Enum.Material.Plastic); Li(Oi, "MaterialVariant", ""); Li(Oi, "Reflectance", 0); Li(Oi, "CastShadow", false); if Oi:IsA("MeshPart") then Li(Oi, "TextureID", ""); Li(Oi, "RenderFidelity", Enum.RenderFidelity.Performance); Li(Oi, "DoubleSided", false); elseif Oi:IsA("PartOperation") then Li(Oi, "RenderFidelity", Enum.RenderFidelity.Performance); end; elseif Oi:IsA("SpecialMesh") then Li(Oi, "TextureId", ""); elseif Oi:IsA("SurfaceAppearance") then Pi[Oi] = true; Li(Oi, "Parent", nil); elseif Oi:IsA("Decal") or(Oi:IsA("Texture")) then Li(Oi, "Transparency", 1); Li(Oi, "Texture", ""); elseif Oi:IsA("ParticleEmitter") then Li(Oi, "Enabled", false); Li(Oi, "Rate", 0); pcall(function() Oi:Clear(); end); elseif Oi:IsA("Trail") then Li(Oi, "Enabled", false); pcall(function() Oi:Clear(); end); elseif Oi:IsA("Beam") or(Oi:IsA("Fire")) or(Oi:IsA("Smoke")) or(Oi:IsA("Sparkles")) or(Oi:IsA("Light")) or(Oi:IsA("PostEffect")) or(Oi:IsA("Clouds")) then Li(Oi, "Enabled", false); elseif Oi:IsA("Atmosphere") then Li(Oi, "Density", 0); Li(Oi, "Haze", 0); Li(Oi, "Glare", 0); elseif Oi:IsA("Sky") then local zi = {"SkyboxBk", "SkyboxDn", "SkyboxFt", "SkyboxLf", "SkyboxRt", "SkyboxUp", "SunTextureId", "MoonTextureId"}; for ni, ni in ipairs(zi) do Li(Oi, ni, ""); end; Li(Oi, "StarCount", 0); Li(Oi, "CelestialBodiesShown", false); elseif Oi:IsA("Shirt") then Li(Oi, "ShirtTemplate", ""); elseif Oi:IsA("Pants") then Li(Oi, "PantsTemplate", ""); elseif Oi:IsA("ShirtGraphic") then Li(Oi, "Graphic", ""); elseif Oi:IsA("Animator") then Si(Oi); end; end; local function zi() if E["Sky Changer"] then return; end; Li(Q, "GlobalShadows", false); Li(Q, "EnvironmentDiffuseScale", 0); Li(Q, "EnvironmentSpecularScale", 0); Li(Q, "FogStart", 0); Li(Q, "FogEnd", 10000000000); end; local function Si() if not Vi then return; end; Vi = false; Fi += 1; if _i then _i (); _i = nil; end; for Oi, Oi in ipairs(Ni) do pcall(function() Oi:Disconnect(); end); end; Ni = {}; for Oi, ni in pairs(Ii) do for Ji, fi in pairs(ni) do pcall(function() Oi[Ji] = fi.value; end); end; end; Ii, Pi = setmetatable({}, {__mode = "k"}), {}; ki = setmetatable({}, {__mode = "k"}); for Ii, Pi in pairs(xi) do pcall(function() if Pi.animator.Parent and not Ii.IsPlaying then Ii:Play(0, 1, Pi.speed); Ii.TimePosition = Pi.time; end; end); end; xi = setmetatable({}, {__mode = "k"}); end; W["Anti Lag"] = function(Ii) if not Ii then Si(); return; end; if Vi then return; end; Vi = true; Fi += 1; local Pi = Fi; zi(); pcall(function() Li(settings().Rendering, "QualityLevel", Enum.QualityLevel.Level01); end); pcall(function() Li(UserSettings():GetService("UserGameSettings"), "SavedQualityLevel", Enum.SavedQualitySetting.QualityLevel1); end); Ii = {workspace, Q}; for ki, ki in ipairs(Ii) do table.insert(Ni, ki.DescendantAdded:Connect(function(Ii) task.defer(function() if Vi and Fi == Pi then pcall(gi, Ii); end; end); end)); end; table.insert(Ni, Q.Changed:Connect(function(Ni) if Vi and(Ni == "GlobalShadows" or Ni == "EnvironmentDiffuseScale" or Ni == "EnvironmentSpecularScale" or Ni == "FogStart" or Ni == "FogEnd") then zi(); end; end)); if _i then _i (); end; _i = _G.__BubbleWalkDescendantsBatched ({workspace, Q}, gi, function() return Vi and Fi == Pi; end); end; _G.__BubbleTrackStopper (Si); end)();
+            do
+                local Vi, Fi, Ni, Ii = 0, 0, 0, 0;
+                local function Pi()
+                    local ki, xi = pcall(function() return m:GetNetworkPing() * 1000; end);
+                    if ki and type(xi) == "number" then
+                        return math.floor(xi);
+                    end;
+                    return 0;
+                end;
+                local function ki()
+                    if T then
+                        T.Text = tostring(Vi) .. " FPS";
+                    end;
+                    if l then
+                        l.Text = tostring(Fi) .. " MS";
+                    end;
+                    if Z then
+                        Z.Text = tostring(Vi) .. " FPS";
+                    end;
+                    if p then
+                        p.Text = tostring(Fi) .. " MS";
+                    end;
+                end;
+                Ni, Ii = 0, 0;
+                _G.__BubbleTrackConn (c.RenderStepped:Connect(function(xi) Ii += 1; Ni += xi; if Ni >= 1 then Vi, Ii, Ni = math.floor(Ii / Ni + 0.5), 0, 0; Fi = Pi(); ki(); end; end));
+            end;
+            do
+                local Vi;
+                local Fi, Ni, Ii = false;
+                local Pi = _G._BubbleHub_UI_EnemyWidgetPos or {x = 140, y =- 340};
+                function _G.__BubbleGuiPositionResetters.EnemyWidget()
+                    Fi, Pi = false, {x = 140, y =- 340};
+                    _G._BubbleHub_UI_EnemyWidgetPos = nil;
+                    if Vi and Vi.Parent then
+                        Vi.Position = UDim2.fromOffset(Pi.x, Pi.y);
+                    end;
+                end;
+                local ki, xi, _i = 0;
+                local Li, zi, Si = false;
+                local gi, Oi = "";
+                function _G.__BubbleGetVisualEnemy ()
+                    if xi and xi.Parent == K then
+                        return xi;
+                    end;
+                    return nil;
+                end;
+                local function ni()
+                    if Vi and Vi.Parent then
+                        return Vi;
+                    end;
+                    Vi = Instance.new("Frame", V);
+                    Vi.Name = "BubbleEnemyWidget";
+                    Vi.Size = UDim2.new(0, 140, 0, 80);
+                    Vi.Position = UDim2.new(0, Pi.x, 0, Pi.y);
+                    _G.__enemyWidget = Vi;
+                    _G.__BubbleRegisterThemeRoot (Vi);
+                    Vi.BackgroundTransparency = 0.15;
+                    Vi.BackgroundColor3 = Color3.fromRGB(0, 0, 0);
+                    Vi.ZIndex = 600;
+                    Vi.Visible = false;
+                    Instance.new("UICorner", Vi).CornerRadius = UDim.new(0, 8);
+                    local Ji = Instance.new("UIStroke", Vi);
+                    Ji.Color = Color3.fromRGB(0, 0, 0);
+                    Ji.Thickness = 1;
+                    Ji = Instance.new("TextLabel", Vi);
+                    Ji.Name = "EWTitle";
+                    Ji.Size = UDim2.new(1,- 10, 0, 14);
+                    Ji.Position = UDim2.new(0, 8, 0, 4);
+                    Ji.BackgroundTransparency = 1;
+                    Ji.Text = "RIVAL";
+                    Ji.Font = Enum.Font.GothamBold;
+                    Ji.TextSize = 10;
+                    Ji.TextColor3 = Color3.fromRGB(180, 180, 180);
+                    Ji.TextXAlignment = Enum.TextXAlignment.Left;
+                    Ji.ZIndex = 601;
+                    Ji = Instance.new("ImageLabel", Vi);
+                    Ji.Name = "EWAvatar";
+                    Ji.Size = UDim2.new(0, 44, 0, 44);
+                    Ji.Position = UDim2.new(0, 6, 0, 20);
+                    Ji.BackgroundColor3 = Color3.fromRGB(25, 25, 25);
+                    Ji.BorderSizePixel = 0;
+                    Ji.Image = "";
+                    Ji.ZIndex = 601;
+                    Instance.new("UICorner", Ji).CornerRadius = UDim.new(0, 6);
+                    local fi = Instance.new("UIStroke", Ji);
+                    fi.Color = Color3.fromRGB(180, 180, 180);
+                    fi.Thickness = 1;
+                    fi = Instance.new("TextLabel", Vi);
+                    fi.Name = "EWName";
+                    fi.Size = UDim2.new(1,- 60, 0, 18);
+                    fi.Position = UDim2.new(0, 56, 0, 22);
+                    fi.BackgroundTransparency = 1;
+                    fi.Text = "---";
+                    fi.Font = Enum.Font.GothamBold;
+                    fi.TextSize = 13;
+                    fi.TextColor3 = Color3.fromRGB(180, 180, 180);
+                    fi.TextXAlignment = Enum.TextXAlignment.Left;
+                    fi.TextScaled = false;
+                    fi = Instance.new("TextLabel", Vi);
+                    fi.Name = "EWTimer";
+                    fi.Size = UDim2.new(1,- 60, 0, 20);
+                    fi.Position = UDim2.new(0, 56, 0, 44);
+                    fi.BackgroundTransparency = 1;
+                    fi.Text = "";
+                    fi.Font = Enum.Font.GothamBlack;
+                    fi.TextSize = 16;
+                    fi.TextColor3 = Color3.fromRGB(255, 221, 0);
+                    fi.TextXAlignment = Enum.TextXAlignment.Left;
+                    fi.ZIndex = 601;
+                    Vi.InputBegan:Connect(function(Ji) if Ji.UserInputType == Enum.UserInputType.MouseButton1 or Ji.UserInputType == Enum.UserInputType.Touch then Fi = true; Ni = Ji.Position; Ii = Vi.Position; Ji.Changed:Connect(function() if Ji.UserInputState == Enum.UserInputState.End then Fi = false; Pi.x = Vi.Position.X.Offset; Pi.y = Vi.Position.Y.Offset; _G._BubbleHub_UI_EnemyWidgetPos = {x = Pi.x, y = Pi.y}; mi(); end; end); end; end);
+                    _G.__BubbleTrackConn (R.InputChanged:Connect(function(Ji) if not Fi then return; end; if Ji.UserInputType ~= Enum.UserInputType.MouseMovement and Ji.UserInputType ~= Enum.UserInputType.Touch then return; end; local Fi, fi = Ji.Position - Ni, workspace.CurrentCamera.ViewportSize; local Ni, Ji = math.clamp(Ii.X.Offset + Fi.X, 0, fi.X - Vi.AbsoluteSize.X), math.clamp(Ii.Y.Offset + Fi.Y, 0, fi.Y - Vi.AbsoluteSize.Y); Vi.Position = UDim2.new(0, Ni, 0, Ji); end));
+                    return Vi;
+                end;
+                local function Fi(Ni)
+                    local Ii = ni():FindFirstChild("EWAvatar");
+                    if not Ii then
+                        return;
+                    end;
+                    Ii.Image = "";
+                    task.spawn(function() local Ji, fi = pcall(function() return K:GetUserThumbnailAsync(Ni, Enum.ThumbnailType.HeadShot, Enum.ThumbnailSize.Size48x48); end); if Ji and fi and Ii and Ii.Parent then Ii.Image = fi; end; end);
+                end;
+                local function Ni(Ii)
+                    if Ii and xi and Ii.UserId == _i then
+                        return;
+                    end;
+                    if not Ii and not xi then
+                        return;
+                    end;
+                    xi, Li, Si = Ii, false, nil;
+                    local Ji = ni();
+                    local fi = Ji:FindFirstChild("EWName");
+                    zi = Ji:FindFirstChild("EWTimer");
+                    if Ii then
+                        _i = Ii.UserId;
+                        if fi then
+                            fi.Text = Ii.Name;
+                        end;
+                        if zi then
+                            zi.Text = "";
+                            gi = "";
+                        end;
+                        Fi(Ii.UserId);
+                        Ji.Visible = true;
+                        Oi = true;
+                    else
+                        _i = nil;
+                        if fi then
+                            fi.Text = "---";
+                        end;
+                        if zi then
+                            zi.Text = "";
+                            gi = "";
+                        end;
+                        local Fi = Ji:FindFirstChild("EWAvatar");
+                        if Fi then
+                            Fi.Image = "";
+                        end;
+                        Ji.Visible = false;
+                        Oi = false;
+                    end;
+                end;
+                local function Fi(Ii)
+                    local _i = ki;
+                    if _i > 0 then
+                        ki = math.max(0, ki - Ii);
+                    end;
+                    Ii = zi;
+                    if not Ii or not Ii.Parent then
+                        return;
+                    end;
+                    if ki > 0 then
+                        _i = string.format("%.1fs", ki);
+                        if _i ~= gi then
+                            Ii.Text = _i;
+                            Ii.TextColor3 = Color3.fromRGB(255, 221, 0);
+                            gi = _i;
+                        end;
+                    elseif gi ~= "" then
+                        Ii.Text = "";
+                        gi = "";
+                    end;
+                end;
+                local Ii, _i, zi = 0, A and 0.5 or 0.25, 0;
+                _G.__BubbleTrackConn (c.Heartbeat:Connect(function(gi) zi += gi or 0; if xi and zi >= 0.2 then Fi(zi); zi = 0; else gi = not xi and zi >= 0.2; if gi then zi = 0; end; end; gi = os.clock(); if gi - Ii < _i then return; end; Ii = gi; gi = m.Character; local Fi = gi and(gi:FindFirstChild("HumanoidRootPart")); if not Fi then return; end; local Ii, _i, zi = Fi.Position, math.huge; for Ji, fi in ipairs(K:GetPlayers()) do gi = fi ~= m and fi.Character; if gi then Fi = gi:FindFirstChild("HumanoidRootPart"); if Fi then Ji = Fi.Position; local oi, qi, Bi = Ii.X - Ji.X, Ii.Y - Ji.Y, Ii.Z - Ji.Z; local Ji = oi * oi + qi * qi + Bi * Bi; if Ji < _i then _i, zi = Ji, fi; end; end; end; end; if zi ~= xi then Ni(zi); end; Fi = Vi; if Fi and Fi.Parent then Ii = zi ~= nil; if Ii ~= Oi then Fi.Visible = Ii; Oi = Ii; end; end; if xi then _i = Fi and(Fi:FindFirstChild("EWName")); if _i then if xi:GetAttribute("Stealing") == true then _i.TextColor3 = Color3.fromRGB(255, 60, 60); else _i.TextColor3 = Color3.fromRGB(180, 180, 180); end; end; end; if xi and xi.Character then Fi = not Si or not Si.Parent; if Fi then Si = xi.Character:FindFirstChildOfClass("Humanoid"); end; if Si then zi = Si:GetState(); Ii = zi == Enum.HumanoidStateType.Physics or zi == Enum.HumanoidStateType.Ragdoll or zi == Enum.HumanoidStateType.FallingDown; _i = Ii and not Li; if _i then ki = 3; else gi = Ii and ki < 0.5; if gi then ki = 0.5; end; end; Li = Ii; end; end; end));
+                function _G._BubbleHub_EnemyWidget_SaveHook ()
+                    if Vi and Vi.Parent then
+                        Pi.x = Vi.Position.X.Offset;
+                        Pi.y = Vi.Position.Y.Offset;
+                        _G._BubbleHub_UI_EnemyWidgetPos = {x = Pi.x, y = Pi.y};
+                    end;
+                end;
+                ni();
+            end;
+            local function Vi(Fi, Ni)
+                local Ii = Instance.new("Frame");
+                Ii.Name = (Ni and(tostring(Ni)) or "Section") .. "SectionStub";
+                Ii.BackgroundTransparency = 1;
+                Ii.Visible = false;
+                Ii.Parent = Fi;
+                return Ii;
+            end;
+            local function Fi(Ni, Ii, Pi, ki)
+                local xi = Instance.new("Frame");
+                xi.Name = tostring(Pi or Ii or "Toggle") .. "Stub";
+                xi.BackgroundTransparency = 1;
+                xi.Visible = false;
+                xi.Parent = Ni;
+                if ki then
+                    Ni = Instance.new("TextButton");
+                    Ni.Text = "";
+                    Ni.Parent = xi;
+                    Ii = Instance.new("Frame");
+                    Ii.BackgroundTransparency = 1;
+                    Ii.Parent = xi;
+                    ki(Ii);
+                end;
+                return xi;
+            end;
+            local function Ni(Ii, Pi, ki)
+                local xi = Instance.new("Frame");
+                xi.Name = tostring(ki or Pi or "Toggle") .. "Stub";
+                xi.BackgroundTransparency = 1;
+                xi.Visible = false;
+                xi.Parent = Ii;
+                return xi;
+            end;
+            local function Ii(Pi)
+                E["Speed Boost"] = true;
+                if _G.__refreshSpeedBoost then
+                    pcall(_G.__refreshSpeedBoost);
+                end;
+                if _ == Pi then
+                    if n == "v2" then
+                        O = not O;
+                        E["Carry Speed"] = O;
+                        if U["Carry Speed"] then
+                            U["Carry Speed"]();
+                        end;
+                        pcall(function() if _G.__refreshSpeedBillboards then _G.__refreshSpeedBillboards (); end; end);
+                        mi();
+                    end;
+                    return;
+                end;
+                if _G.__BubbleResetSpeedDirection then
+                    pcall(_G.__BubbleResetSpeedDirection);
+                end;
+                _, J = Pi, if Pi == "Lagger" then
+                    true
+                else
+                    false;
+                    for Pi, Pi in ipairs(_speedCardRefs) do
+                        if Pi.updateVisual then
+                            pcall(Pi.updateVisual);
+                        end;
+                    end;
+                    mi();
+                    pcall(function() if _G.__refreshSpeedBillboards then _G.__refreshSpeedBillboards (); end; end);
+                end;
+                FeatureToggles = FeatureToggles or {};
+                function FeatureToggles.SelectNormalMode()
+                    Ii("Normal");
+                end;
+                function FeatureToggles.SelectLaggerMode()
+                    Ii("Lagger");
+                end;
+                function FeatureToggles.SelectDesyncMode()
+                    Ii("Desync");
+                end;
+                FeatureToggles["Toggle UI"] = function()
+                    if _G.__setPanelVisible then
+                        _G.__setPanelVisible (not C.Visible);
+                    else
+                        panelVisible = not C.Visible;
+                        C.Visible = panelVisible;
+                        E["Toggle UI"] = panelVisible;
+                    end;
+                    if U["Toggle UI"] then
+                        U["Toggle UI"]();
+                    end;
+                    mi();
+                end;
+                local function Pi()
+                    if _ == "Lagger" or J then
+                        return N.LaggerBoost or g;
+                    elseif _ == "Desync" then
+                        return N.DesyncBoost or z;
+                    end;
+                    for ki, ki in ipairs(I) do
+                        if _ == ki.name then
+                            return ki.boost;
+                        end;
+                    end;
+                    return N.NormalBoost or z;
+                end;
+                local ki = {Enabled = false, Connection = nil, ResetCooldown = 0};
+                local function xi()
+                    if ki.Connection then
+                        return;
+                    end;
+                    ki.Enabled = true;
+                    ki.Connection = c.Heartbeat:Connect(function() if not E["Anti Ragdoll"] then return; end; local _i = m.Character; if not _i then return; end; local Li, zi = _i:FindFirstChildOfClass("Humanoid"), _i:FindFirstChild("HumanoidRootPart"); if not Li or not zi or Li.Health <= 0 then return; end; if _G.dropActive then return; end; local Si, gi = Li:GetState(), tick(); if Si == Enum.HumanoidStateType.Physics or Si == Enum.HumanoidStateType.Ragdoll or Si == Enum.HumanoidStateType.FallingDown then if gi - ki.ResetCooldown > 0.15 then ki.ResetCooldown = gi; pcall(function() Li:ChangeState(Enum.HumanoidStateType.GettingUp); zi.Velocity = Vector3.zero; zi.RotVelocity = Vector3.zero; zi.AssemblyLinearVelocity = Vector3.zero; zi.AssemblyAngularVelocity = Vector3.zero; for zi, zi in ipairs(_i:GetDescendants()) do if zi:IsA("Motor6D") then zi.Enabled = true; end; if zi:IsA("Constraint") then zi.Enabled = true; end; end; workspace.CurrentCamera.CameraSubject = Li; local _i = m.PlayerScripts:FindFirstChild("PlayerModule"); if _i then local zi = require(_i:FindFirstChild("ControlModule")); if zi then zi:Enable(); end; end; Li.AutoRotate = true; Li.PlatformStand = false; Li.Sit = false; end); end; end; end);
+                end;
+                local function _i ()
+                    ki.Enabled = false;
+                    if ki.Connection then
+                        ki.Connection:Disconnect();
+                        ki.Connection = nil;
+                    end;
+                end;
+                _G.__BubbleTrackStopper (_i);
+                W["Anti Ragdoll"] = function(Li)
+                    if Li then
+                        xi();
+                    else
+                        _i ();
+                    end;
+                end;
+                _G.__BubbleTrackConn (m.CharacterAdded:Connect(function(_i) task.wait(0.5); if E["Anti Ragdoll"] then if ki.Connection then ki.Connection:Disconnect(); ki.Connection = nil; end; xi(); end; end));
+                if E["Anti Ragdoll"] then
+                    xi();
+                end;
+                do
+                    local ki = {Connection = nil, RagdollConnection = nil};
+                    local function xi()
+                        if ki.Connection then
+                            ki.Connection:Disconnect();
+                            ki.Connection = nil;
+                        end;
+                        if ki.RagdollConnection then
+                            ki.RagdollConnection:Disconnect();
+                            ki.RagdollConnection = nil;
+                        end;
+                    end;
+                    local function _i ()
+                        local Li = m.Character;
+                        local zi = Li and(Li:FindFirstChild("HumanoidRootPart"));
+                        if not zi then
+                            return;
+                        end;
+                        if ki.Connection then
+                            ki.Connection:Disconnect();
+                        end;
+                        ki.Connection = c.Heartbeat:Connect(function() if not E["Anti Bat"] or not zi.Parent then return; end; local Li = Vector3.new(zi.Velocity.X, 0, zi.Velocity.Z); zi.Velocity = Vector3.new(1000, zi.Velocity.Y, 1000); c.RenderStepped:Wait(); if zi.Parent then zi.Velocity = Vector3.new(Li.X, zi.Velocity.Y, Li.Z); end; end);
+                    end;
+                    local function Li()
+                        if ki.RagdollConnection then
+                            return;
+                        end;
+                        ki.RagdollConnection = c.Heartbeat:Connect(function() if not E["Anti Bat"] then return; end; local ki = m.Character; if not ki then return; end; local zi, Si = ki:FindFirstChildOfClass("Humanoid"), ki:FindFirstChild("HumanoidRootPart"); if zi then local gi = zi:GetState(); if gi == Enum.HumanoidStateType.Physics or gi == Enum.HumanoidStateType.Ragdoll or gi == Enum.HumanoidStateType.FallingDown then zi:ChangeState(Enum.HumanoidStateType.Running); workspace.CurrentCamera.CameraSubject = zi; pcall(function() local zi = m.PlayerScripts:FindFirstChild("PlayerModule"); if zi then require(zi:FindFirstChild("ControlModule")):Enable(); end; end); if Si then Si.Velocity = Vector3.new(0, 0, 0); Si.RotVelocity = Vector3.new(0, 0, 0); end; end; end; for zi, zi in ipairs(ki:GetDescendants()) do if zi:IsA("Motor6D") and not zi.Enabled then zi.Enabled = true; end; end; end);
+                    end;
+                    local function ki()
+                        xi();
+                        _i ();
+                        Li();
+                    end;
+                    _G.__BubbleTrackStopper (xi);
+                    W["Anti Bat"] = function(_i)
+                        if _i then
+                            ki();
+                        else
+                            xi();
+                        end;
+                    end;
+                    _G.__BubbleTrackConn (m.CharacterAdded:Connect(function() task.wait(0.3); if E["Anti Bat"] then ki(); end; end));
+                    if E["Anti Bat"] then
+                        ki();
+                    end;
+                end;
+                local function ki()
+                    if _ == "Lagger" or J then
+                        return N.LaggerSteal or S;
+                    elseif _ == "Desync" then
+                        return N.DesyncSteal or S;
+                    end;
+                    for J, J in ipairs(I) do
+                        if _ == J.name then
+                            return J.steal;
+                        end;
+                    end;
+                    return N.NormalSteal or S;
+                end;
+                local function J(xi)
+                    return O or xi and E["Auto Carry Speed"];
+                end;
+                do
+                    ii = _G.__BubbleSpeedSpoofState;
+                    if type(ii) == "table" then
+                        ii.enabled = false;
+                    end;
+                    local xi = _G.__BubbleS2SpeedState;
+                    if type(xi) ~= "table" then
+                        xi = {hooked = false};
+                        _G.__BubbleS2SpeedState = xi;
+                    end;
+                    xi.enabled = false;
+                    xi.root = nil;
+                    xi.velChecked = setmetatable({}, {__mode = "k"});
+                    local function _i (Li)
+                        xi.velChecked = setmetatable({}, {__mode = "k"});
+                        if not Li then
+                            xi.root = nil;
+                            return nil;
+                        end;
+                        local zi = Li:WaitForChild("HumanoidRootPart", 5);
+                        if zi then
+                            xi.root = zi;
+                            xi.velChecked[zi] = true;
+                        end;
+                        return zi;
+                    end;
+                    local function Li(zi)
+                        if not zi then
+                            return;
+                        end;
+                        xi.root = zi;
+                        xi.velChecked[zi] = true;
+                        if xi.hooked then
+                            return;
+                        end;
+                        if type(getrawmetatable) ~= "function" or type(setreadonly) ~= "function" or type(newcclosure) ~= "function" or type(checkcaller) ~= "function" then
+                            return;
+                        end;
+                        pcall(function() local zi = getrawmetatable(game); if not zi then return; end; local Si = rawget(zi, "__index"); if type(Si) ~= "function" and type(Si) ~= "table" then return; end; local gi = newcclosure(function(Oi, ni) local Ji = if type(Si) == "function" then(Si(Oi, ni)) else Si[ni]; if not checkcaller() and xi.velChecked[Oi] and(ni == "AssemblyLinearVelocity" or ni == "Velocity") and typeof(Ji) == "Vector3" and Ji.Magnitude > 20 then return Ji.Unit * 20; end; return Ji; end); setreadonly(zi, false); zi.__index = gi; xi.hooked = true; setreadonly(zi, true); end);
+                    end;
+                    local function zi()
+                        f = Vector3.zero;
+                        xi.enabled = false;
+                    end;
+                    function _G.__BubbleResetSpeedDirection ()
+                        f = Vector3.zero;
+                        local Si = m.Character;
+                        local gi, Oi = Si and(Si:FindFirstChildOfClass("Humanoid")), Si and(Si:FindFirstChild("HumanoidRootPart"));
+                        if gi and Oi and gi.MoveDirection.Magnitude <= 0.05 then
+                            Oi.AssemblyLinearVelocity = Vector3.new(0, Oi.AssemblyLinearVelocity.Y, 0);
+                        end;
+                    end;
+                    local function Si(gi)
+                        if not gi then
+                            return true;
+                        end;
+                        local Oi = gi:GetState();
+                        return gi.PlatformStand or Oi == Enum.HumanoidStateType.Physics or Oi == Enum.HumanoidStateType.Ragdoll or Oi == Enum.HumanoidStateType.FallingDown;
+                    end;
+                    local function gi(Oi)
+                        if J(Oi) then
+                            return ki();
+                        end;
+                        return Pi();
+                    end;
+                    local function J()
+                        if _G.__speedBoostConn then
+                            _G.__speedBoostConn:Disconnect();
+                            _G.__speedBoostConn = nil;
+                        end;
+                        zi();
+                    end;
+                    local function Oi(ni, Ji)
+                        local fi = m.Character;
+                        local oi, qi = fi and(fi:FindFirstChildOfClass("Humanoid")), fi and(fi:FindFirstChild("HumanoidRootPart"));
+                        if not oi or not qi or oi.Health <= 0 then
+                            return;
+                        end;
+                        if type(Ji) ~= "number" or Ji ~= Ji or Ji <= 0 or Ji == math.huge then
+                            return;
+                        end;
+                        oi = qi.AssemblyLinearVelocity.Y;
+                        if _G._ZurichHub_MovementBlocked == true or _G._BubbleHub_MovementBlocked == true then
+                            qi.AssemblyLinearVelocity = Vector3.new(0, math.min(oi, 0), 0);
+                            return;
+                        end;
+                        if ni and ni.Magnitude > 0.05 then
+                            pcall(function() if qi.SetNetworkOwner then qi:SetNetworkOwner(m); end; end);
+                            fi = ni.Unit;
+                            qi.AssemblyLinearVelocity = Vector3.new(fi.X * Ji, oi, fi.Z * Ji);
+                        else
+                            qi.AssemblyLinearVelocity = Vector3.new(0, oi, 0);
+                        end;
+                    end;
+                    local function ni()
+                        J();
+                        _G.__speedBoostConn = c.RenderStepped:Connect(function() if not E["Speed Boost"] then return; end; local Ji = m.Character; local fi, oi = Ji and(Ji:FindFirstChildOfClass("Humanoid")), Ji and(Ji:FindFirstChild("HumanoidRootPart")); if not fi or not oi or fi.Health <= 0 then return; end; if E.Autoplay or E["TP Bat"] or E.Aimbot or E["Lagger Aimbot"] or _G.dropActive or _G.IsDropping then zi(); return; end; if Si(fi) then f = Vector3.zero; return; end; if xi.root ~= oi or not xi.velChecked[oi] then f = Vector3.zero; _i (Ji); Li(oi); end; xi.enabled = true; oi = nil; if fi.MoveDirection.Magnitude > 0 then f = fi.MoveDirection; oi = fi.MoveDirection; elseif f.Magnitude > 0 then for Ji in pairs(o) do if R:IsKeyDown(Ji) then oi = f; break; end; end; end; Oi(oi, tonumber((gi(m:GetAttribute("Stealing") == true))) or 16); end);
+                    end;
+                    local function f()
+                        if not E["Speed Boost"] then
+                            return;
+                        end;
+                        local o = m.Character;
+                        local Ji = o and(o:FindFirstChildOfClass("Humanoid"));
+                        if not Ji or Ji.Health <= 0 or(Si(Ji)) then
+                            return;
+                        end;
+                        Oi(Ji.MoveDirection.Magnitude > 0.05 and Ji.MoveDirection or nil, gi(m:GetAttribute("Stealing") == true));
+                    end;
+                    local function o()
+                        E["Speed Boost"] = true;
+                        ni();
+                    end;
+                    _G.__refreshSpeedBoost = o;
+                    _G.__stopSpeedBoost = J;
+                    _G.__BubbleTrackStopper (function() E["Speed Boost"] = false; J(); xi.root = nil; _G.__BubbleResetSpeedDirection = nil; end);
+                    if m.Character then
+                        Li((_i (m.Character)));
+                    end;
+                    if E["Speed Boost"] then
+                        ni();
+                    end;
+                    _G.__BubbleTrackConn (m.CharacterAdded:Connect(function(Si) task.wait(0.5); zi(); local zi = Si:WaitForChild("HumanoidRootPart", 5); if zi then _i (Si); Li(zi); end; if E["Speed Boost"] then ni(); end; end));
+                    _G.__BubbleTrackConn (m.CharacterRemoving:Connect(function() J(); xi.root = nil; xi.velChecked = setmetatable({}, {__mode = "k"}); end));
+                    FeatureToggles["Speed Boost"] = nil;
+                    W["Speed Boost"] = function()
+                        E["Speed Boost"] = true;
+                        ni();
+                    end;
+                    FeatureToggles["Carry Speed"] = function()
+                        E["Carry Speed"] = not E["Carry Speed"];
+                        O = E["Carry Speed"];
+                        E["Speed Boost"] = true;
+                        ni();
+                        f();
+                        if U["Carry Speed"] then
+                            U["Carry Speed"]();
+                        end;
+                        pcall(function() if _G.__refreshSpeedBillboards then _G.__refreshSpeedBillboards (); end; end);
+                        mi();
+                    end;
+                    W["Carry Speed"] = function(J)
+                        O = J;
+                        if J or n == "v2" then
+                            E["Speed Boost"] = true;
+                            ni();
+                            f();
+                        end;
+                        pcall(function() if _G.__refreshSpeedBillboards then _G.__refreshSpeedBillboards (); end; end);
+                    end;
+                    W["Auto Carry Speed"] = function(J)
+                        E["Speed Boost"] = true;
+                        if not _G.__speedBoostConn then
+                            ni();
+                        end;
+                        pcall(function() if _G.__refreshSpeedBillboards then _G.__refreshSpeedBillboards (); end; end);
+                    end;
+                    local J, f, xi, _i = {}, setmetatable({}, {__mode = "k"}), ColorSequence.new({ColorSequenceKeypoint.new(0, Color3.fromRGB(7, 22, 48)), ColorSequenceKeypoint.new(0.5, Color3.fromRGB(125, 215, 255)), ColorSequenceKeypoint.new(1, Color3.fromRGB(7, 22, 48))}), ColorSequence.new({ColorSequenceKeypoint.new(0, Color3.fromRGB(7, 22, 48)), ColorSequenceKeypoint.new(0.5, Color3.fromRGB(125, 215, 255)), ColorSequenceKeypoint.new(1, Color3.fromRGB(7, 22, 48))});
+                    local function Li(zi)
+                        if _G.__BubbleGuiTheme == "GUI 3" then
+                            return ColorSequence.new(Color3.fromRGB(7, 22, 48), Color3.fromRGB(125, 215, 255));
+                        end;
+                        if zi then
+                            return _G.__BubbleGuiTheme == "GUI 2" and _i or xi;
+                        end;
+                        return ColorSequence.new({ColorSequenceKeypoint.new(0, Color3.fromRGB(7, 22, 48)), ColorSequenceKeypoint.new(0.5, Color3.fromRGB(125, 215, 255)), ColorSequenceKeypoint.new(1, Color3.fromRGB(7, 22, 48))});
+                    end;
+                    local xi;
+                    local function _i (zi)
+                        local Si = zi.Character;
+                        if not Si then
+                            return "0";
+                        end;
+                        local Oi = Si:FindFirstChild("HumanoidRootPart");
+                        if not Oi then
+                            return "0";
+                        end;
+                        local ni = Oi.AssemblyLinearVelocity;
+                        Oi = Vector3.new(ni.X, 0, ni.Z).Magnitude;
+                        ni = Oi < 0.5 and 0 or(math.floor(Oi + 0.5));
+                        if zi == m then
+                            Oi = m:GetAttribute("Stealing") == true;
+                            local zi, Ji = O or Oi and E["Auto Carry Speed"], Si:FindFirstChildOfClass("Humanoid");
+                            return tostring(if E["Speed Boost"] and Ji and Ji.MoveDirection.Magnitude > 0.05 then(math.floor(gi(Oi) + 0.5)) else ni) .. " - " .. (zi and "CARRY" or "NORMAL");
+                        end;
+                        return tostring(ni);
+                    end;
+                    local function zi(Si, gi)
+                        if not Si or not Si.Parent then
+                            return;
+                        end;
+                        if J[Si] then
+                            return;
+                        end;
+                        J[Si] = true;
+                        task.spawn(function() xi(Si, gi); J[Si] = nil; end);
+                    end;
+                    xi = function(J, xi)
+                        task.wait(0.3);
+                        local Si = J:FindFirstChild("Head");
+                        if not Si then
+                            return;
+                        end;
+                        local gi = Si:FindFirstChild("GreenDuelsBB");
+                        if gi then
+                            gi:Destroy();
+                        end;
+                        gi = Si:FindFirstChild("BubbleSpeedBill");
+                        if gi then
+                            gi:Destroy();
+                        end;
+                        gi = Si:FindFirstChild("BubbleHubOverhead");
+                        if gi then
+                            gi:Destroy();
+                        end;
+                        gi = J:FindFirstChild("UpperTorso") or(J:FindFirstChild("HumanoidRootPart"));
+                        if gi then
+                            local Oi = gi:FindFirstChild("GreenDuelsBB");
+                            if Oi then
+                                Oi:Destroy();
+                            end;
+                        end;
+                        gi = Instance.new("BillboardGui", Si);
+                        gi.Name = "GreenDuelsBB";
+                        gi:SetAttribute("BubbleThemeWorldAccent", true);
+                        gi.Size = xi and(UDim2.fromOffset(190, 60)) or(UDim2.fromOffset(130, 42));
+                        gi.StudsOffset = xi and(Vector3.new(0, 1.8, 0)) or(Vector3.new(0, 1.65, 0));
+                        gi.AlwaysOnTop = true;
+                        gi.LightInfluence = 0;
+                        gi.MaxDistance = 0;
+                        local function Oi(ni, Ji)
+                            ni.Font = Enum.Font.GothamBlack;
+                            ni.TextStrokeTransparency = 0;
+                            if Ji then
+                                ni.TextColor3 = Color3.fromRGB(125, 215, 255);
+                                local Ji = Instance.new("UIStroke", ni);
+                                Ji.Color = Color3.fromRGB(0, 0, 0);
+                                Ji.Thickness = 1.75;
+                                Ji.Transparency = 0.2;
+                                Ji = Instance.new("UIGradient");
+                                Ji.Name = "SpeedTextGradient";
+                                Ji.Color = Li(true);
+                                Ji.Parent = ni;
+                            else
+                                ni.TextColor3 = Color3.fromRGB(125, 215, 255);
+                                local Ji = Instance.new("UIStroke", ni);
+                                Ji.Color = Color3.fromRGB(0, 0, 0);
+                                Ji.Thickness = 2.25;
+                                Ji.Transparency = 0.1;
+                                Ji = Instance.new("UIGradient");
+                                Ji.Name = "SpeedTextGradient";
+                                Ji.Color = Li(false);
+                                Ji.Parent = ni;
+                            end;
+                        end;
+                        Si = Instance.new("TextLabel", gi);
+                        Si.Size = UDim2.new(1, 0, 0, xi and 28 or 22);
+                        Si.Position = UDim2.new(0, 0, 0, 0);
+                        Si.BackgroundTransparency = 1;
+                        Si.Text = xi and ".gg/bubblehub" or "";
+                        Si.Visible = xi;
+                        Si.TextScaled = false;
+                        Si.TextSize = xi and 19 or 15;
+                        Oi(Si, xi);
+                        Si = Instance.new("TextLabel", gi);
+                        Si.Name = "SpeedBillLbl";
+                        Si.Size = UDim2.new(1, 0, 0, xi and 29 or 20);
+                        Si.Position = UDim2.new(0, 0, 0, xi and 30 or 22);
+                        Si.BackgroundTransparency = 1;
+                        local ni = K:GetPlayerFromCharacter(J);
+                        Si.Text = ni and(_i (ni)) or "0";
+                        if ni then
+                            f[ni] = Si;
+                        end;
+                        Si.TextScaled = false;
+                        Si.TextSize = xi and 22 or 16;
+                        Oi(Si, xi);
+                        _G.__BubbleRegisterThemeRoot (gi);
+                    end;
+                    local function J(xi)
+                        if xi.Character then
+                            zi(xi.Character, xi == m);
+                        end;
+                        _G.__BubbleTrackConn (xi.CharacterAdded:Connect(function(Si) zi(Si, xi == m); end));
+                    end;
+                    for xi, xi in ipairs(K:GetPlayers()) do
+                        if xi ~= m then
+                            J(xi);
+                        end;
+                    end;
+                    _G.__BubbleTrackConn (K.PlayerAdded:Connect(function(xi) J(xi); end));
+                    if m.Character then
+                        zi(m.Character, true);
+                    end;
+                    _G.__BubbleTrackConn (m.CharacterAdded:Connect(function(J) O = E["Carry Speed"] == true; task.spawn(function() zi(J, true); pcall(function() if _G.__refreshSpeedBillboards then _G.__refreshSpeedBillboards (); end; end); end); end));
+                    local J, xi, Si = 0, A and 0.5 or 0.25, {};
+                    _G.__BubbleTrackConn (c.Heartbeat:Connect(function(gi) J += gi or 0; if J < xi then return; end; J = 0; for J, xi in ipairs(K:GetPlayers()) do gi = xi.Character; if gi then J = f[xi]; if not J or not J.Parent then f[xi] = nil; zi(gi, xi == m); else local zi = _i (xi); if Si[xi.UserId] ~= zi then J.Text = zi; Si[xi.UserId] = zi; end; end; end; end; end));
+                    function _G.__refreshSpeedBillboards ()
+                        for J, xi in ipairs(K:GetPlayers()) do
+                            J = xi.Character;
+                            if not J then
+                                continue;
+                            end;
+                            local zi, Si = J:FindFirstChild("HumanoidRootPart") or(J:FindFirstChild("UpperTorso")), J:FindFirstChild("Head");
+                            local gi = J:FindFirstChild("UpperTorso") or zi;
+                            if not zi and not Si then
+                                continue;
+                            end;
+                            J = Si and(Si:FindFirstChild("GreenDuelsBB")) or gi and(gi:FindFirstChild("GreenDuelsBB"));
+                            if not J then
+                                continue;
+                            end;
+                            zi = J:FindFirstChild("SpeedBillLbl");
+                            if not zi then
+                                continue;
+                            end;
+                            f[xi] = zi;
+                            zi.Text = _i (xi);
+                            Si = Li(xi == m);
+                            for f, f in ipairs(J:GetChildren()) do
+                                if f:IsA("TextLabel") then
+                                    xi = f:FindFirstChild("SpeedTextGradient");
+                                    if xi then
+                                        xi.Color = Si;
+                                    end;
+                                end;
+                            end;
+                        end;
+                    end;
+                    o();
+                    local J, f = {Vector3.new(- 475.86,- 7, 91.97), Vector3.new(- 485.83,- 7, 97.37), Vector3.new(- 475.86,- 7, 91.97), Vector3.new(- 476.35,- 7, 27.88), Vector3.new(- 477.09,- 7, 19.85)}, {Vector3.new(- 475.84,- 7, 28.81), Vector3.new(- 486.04,- 7, 23.32), Vector3.new(- 475.51,- 7, 29.01), Vector3.new(- 476.43,- 7, 91.61), Vector3.new(- 476.27,- 7, 98.86)};
+                    _G.__autoLeftWaypoints = J;
+                    _G.__autoRightWaypoints = f;
+                    local o, xi, _i, Li, zi = false, "none", 1, false;
+                    _G.__autoplayMode = _G.__autoplayMode or "Full";
+                    local function Si()
+                        local gi = workspace:FindFirstChild("Plots");
+                        if not gi then
+                            return "left";
+                        end;
+                        for Oi, ni in ipairs(gi:GetChildren()) do
+                            Oi = ni:FindFirstChild("PlotSign");
+                            local gi = Oi and(Oi:FindFirstChild("YourBase"));
+                            if gi and gi.Enabled then
+                                Oi = ni:FindFirstChild("AnimalTarget", true);
+                                local gi = Oi and Oi.Position;
+                                if not gi then
+                                    local Oi = ni:FindFirstChild("DeliveryHitbox");
+                                    gi = Oi and Oi.Position;
+                                end;
+                                if gi then
+                                    if type(J) == "table" and type(f) == "table" and J[1] and f[1] then
+                                        return(gi - J[1]).Magnitude <= (gi - f[1]).Magnitude and "right" or "left";
+                                    end;
+                                end;
+                                do
+                                    local gi;
+                                    if typeof(ni.GetPivot) == "function" then
+                                        pcall(function() local Oi = ni:GetPivot(); if Oi then gi = Oi.Position; end; end);
+                                    end;
+                                    if gi then
+                                        return gi.Z >= 60 and "right" or "left";
+                                    else
+                                        return m and m.Character and(m.Character:FindFirstChild("HumanoidRootPart")) and m.Character:FindFirstChild("HumanoidRootPart").Position.Z >= 60 and "right" or "left";
+                                    end;
+                                end;
+                            end;
+                        end;
+                        return "left";
+                    end;
+                    (function() if _G.__ZurichSetFullNoPlayerCollision then pcall(_G.__ZurichSetFullNoPlayerCollision, false); end; local gi, Oi, ni, Ji = false, false, {}, setmetatable({}, {__mode = "k"}); local function fi() return E["TP Bat"] == true; end; local function oi(qi) if not qi:IsA("BasePart") then return; end; if Ji[qi] == nil then Ji[qi] = {CanCollide = qi.CanCollide, CanTouch = qi.CanTouch}; end; if qi.CanCollide then qi.CanCollide = false; end; if qi.CanTouch then qi.CanTouch = false; end; end; local function qi(Bi) if not Bi then return; end; for ji, ji in ipairs(Bi:GetDescendants()) do oi(ji); end; end; local function Bi(ji) if fi() then return; end; qi(ji); table.insert(ni, ji.DescendantAdded:Connect(function(ji) if gi and not Oi and not fi() then oi(ji); end; end)); end; local function oi(ji) if ji == m then return; end; if ji.Character then Bi(ji.Character); end; table.insert(ni, ji.CharacterAdded:Connect(function(ji) if gi and not Oi and not fi() then Bi(ji); end; end)); end; local function Bi() for ji, wi in pairs(Ji) do if ji and ji.Parent then pcall(function() ji.CanCollide = wi.CanCollide; ji.CanTouch = wi.CanTouch; end); end; end; Ji = setmetatable({}, {__mode = "k"}); end; local function Ji() if _G.dropActive or _G.IsDropping then return; end; local ji = m.Character; local wi, yi = ji and(ji:FindFirstChild("HumanoidRootPart")), ji and(ji:FindFirstChildOfClass("Humanoid")); if not wi or not yi or yi.Health <= 0 then return; end; yi = wi.AssemblyLinearVelocity; local Ui, ei, ai = Vector3.new(yi.X, 0, yi.Z), wi.AssemblyAngularVelocity, E["TP Bat"] == true or E.Aimbot == true or E["Lagger Aimbot"] == true or o == true; if(Ui.Magnitude > 375 or math.abs(yi.Y) > 300 or ei.Magnitude > 110) and not ai then for wi, wi in ipairs(ji:GetDescendants()) do if wi:IsA("BasePart") then wi.AssemblyLinearVelocity = Vector3.zero; wi.AssemblyAngularVelocity = Vector3.zero; end; end; end; end; local function ji() if gi then return; end; gi = true; Oi = fi(); if not Oi then for wi, wi in ipairs(K:GetPlayers()) do oi(wi); end; end; table.insert(ni, K.PlayerAdded:Connect(oi)); local oi = 0; table.insert(ni, c.Stepped:Connect(function(wi, wi) if not gi then return; end; if A then oi += wi or 0; if oi < 0.1 then return; end; oi = 0; end; if fi() then if not Oi then Oi = true; Bi(); end; return; end; Oi = Oi and false; for fi, fi in ipairs(K:GetPlayers()) do if fi ~= m and fi.Character then qi(fi.Character); end; end; end)); end; local function fi() if not gi then return; end; gi = false; for oi, oi in ipairs(ni) do pcall(function() oi:Disconnect(); end); end; ni = {}; Bi(); Oi = false; end; function _G.__ZurichSetFullNoPlayerCollision (Oi) if Oi then ji(); else fi(); end; end; _G.__setNoPlayerCollision = _G.__ZurichSetFullNoPlayerCollision; function _G.__getNoPlayerCollision () return gi; end; _G.__BubbleTrackStopper (fi); _G.__BubbleTrackConn (c.PostSimulation:Connect(Ji)); ji(); end)();
+                    local function gi(Oi)
+                        if not Oi or not Oi:IsA("BasePart") then
+                            return;
+                        end;
+                        if Oi.CanCollide and(Oi.Transparency >= 0.9 or Oi.LocalTransparencyModifier >= 0.9) then
+                            Oi.CanCollide = false;
+                        end;
+                    end;
+                    local function Oi(ni, Ji)
+                        if not ni then
+                            return;
+                        end;
+                        for fi, fi in ipairs(workspace:GetPartBoundsInRadius(ni, Ji)) do
+                            gi(fi);
+                        end;
+                    end;
+                    _G.__killInvisibleNear = Oi;
+                    _G.__BubbleTrackConn (workspace.DescendantAdded:Connect(function(ni) if not(E["ESP Players"] or E["Player Tracers"] or E["Stretchz Res"]) then return; end; gi(ni); end));
+                    do
+                        local ni, Ji, fi = 0, 0;
+                        _G.__BubbleTrackConn (c.Heartbeat:Connect(function(oi) if not(E["ESP Players"] or E["Player Tracers"] or E["Stretchz Res"]) then return; end; ni += oi or 0; Ji += oi or 0; if ni >= 2 then ni = 0; oi = m.Character; local ni = oi and(oi:FindFirstChild("HumanoidRootPart")); if ni then for qi, qi in ipairs(oi:GetDescendants()) do gi(qi); end; local oi = ni.AssemblyLinearVelocity; local qi = Vector3.new(oi.X, 0, oi.Z); oi = qi.Magnitude; local Bi = math.clamp(20 + oi * 0.2, 20, 40); Oi(ni.Position, Bi); if oi > 5 then Oi(ni.Position + qi * 0.35, Bi); end; end; end; if Ji >= 15 then Ji = 0; if fi then fi(); end; fi = _G.__BubbleWalkDescendantsBatched (workspace, gi, function() return E["ESP Players"] or E["Player Tracers"] or E["Stretchz Res"]; end); end; end));
+                    end;
+                    _G.__BubbleTrackConn (m.CharacterAdded:Connect(function() awfLastRecovery = 0; end));
+                    local gi = false;
+                    local function Oi(ni)
+                        if ni then
+                            if E["Auto Carry Speed"] then
+                                return;
+                            end;
+                            gi = true;
+                        else
+                            if not gi then
+                                return;
+                            end;
+                            gi = false;
+                        end;
+                        E["Auto Carry Speed"] = ni;
+                        local gi = e["Auto Carry Speed"];
+                        if gi then
+                            pcall(gi, ni);
+                        end;
+                        gi = W["Auto Carry Speed"];
+                        if gi then
+                            pcall(gi, ni);
+                        end;
+                        gi = U["Auto Carry Speed"];
+                        if gi then
+                            pcall(gi);
+                        end;
+                    end;
+                    local function gi(ni)
+                        E.Autoplay = ni;
+                        local Ji = e.Autoplay;
+                        if Ji then
+                            pcall(Ji, ni);
+                            return;
+                        end;
+                        ni = U.Autoplay;
+                        if ni then
+                            pcall(ni);
+                        end;
+                    end;
+                    local function ni(Ji)
+                        if o then
+                            o, xi, _i, Li = false, "none", 1, false;
+                            if zi then
+                                zi:Disconnect();
+                                zi = nil;
+                            end;
+                            local fi = m.Character and(m.Character:FindFirstChild("HumanoidRootPart"));
+                            if fi then
+                                fi.Velocity = Vector3.new(0, fi.Velocity.Y, 0);
+                            end;
+                        end;
+                        Oi(false);
+                        if Ji then
+                            return;
+                        end;
+                        if E.Autoplay then
+                            gi(false);
+                            mi();
+                        end;
+                    end;
+                    _G.__stopAutoplay = ni;
+                    _G.__BubbleTrackStopper (ni);
+                    local function gi()
+                        if o then
+                            ni(true);
+                        end;
+                        ci();
+                        if E["TP Bat"] and _G.BubbleAutoBat then
+                            _G.BubbleAutoBat.SetEnabled(false);
+                        end;
+                        xi, _i, Li, o = Si(), 1, false, true;
+                        Oi(false);
+                        if not _G.__autoplayMode or _G.__autoplayMode ~= "Full" and _G.__autoplayMode ~= "Semi" then
+                            _G.__autoplayMode = "Full";
+                        end;
+                        if zi then
+                            zi:Disconnect();
+                        end;
+                        zi = c.Heartbeat:Connect(function(zi) if not o then return; end; local Si = xi == "left" and J or f; local J, f = _G.__autoplayMode == "Semi" and 2 or #Si, Si[_i]; if not f then return; end; Si = m:GetAttribute("Stealing"); if Si == true then Li = true; end; Si = _i > 2 and Li; Oi(Si); local xi = m.Character; if not xi then return; end; local Ji = xi:FindFirstChild("HumanoidRootPart"); if not Ji then return; end; local fi, oi = Ji.Position, Vector3.new(f.X, 0, f.Z); xi = Vector3.new(fi.X, 0, fi.Z); fi = (oi - xi).Magnitude; if _i > 2 and not Li then Ji.Velocity = Vector3.new(0, Ji.Velocity.Y, 0); return; end; if fi <= 1.1 then Ji.Velocity = Vector3.new(0, Ji.Velocity.Y, 0); if _i >= J then if m:GetAttribute("Stealing") ~= true then ni(); end; return; end; _i += 1; else f = oi - xi; f = if f.Magnitude > 0.001 then f.Unit else f; local J = (Si and(ki()) or(Pi())) + 1; J = math.min(if fi < 1.5 then J * math.clamp(fi / 1.5, 0.6, 1) else J, fi / math.max(zi or 0.016666666666666666, 0.004166666666666667)); Ji.Velocity = Vector3.new(f.X * J, Ji.Velocity.Y, f.Z * J); end; end);
+                    end;
+                    _G.__BubbleTrackConn (m.CharacterAdded:Connect(function() task.wait(0.5); if o then gi(); end; end));
+                    W.Autoplay = function(J)
+                        if J then
+                            Oi(true);
+                            _G.__checkAndAutoDrop (function() gi(); end);
+                        else
+                            ni();
+                        end;
+                    end;
+                    function FeatureToggles.Autoplay()
+                        E.Autoplay = not E.Autoplay;
+                        if E.Autoplay then
+                            Oi(true);
+                            _G.__checkAndAutoDrop (function() gi(); end);
+                        else
+                            ni();
+                        end;
+                        if U.Autoplay then
+                            U.Autoplay();
+                        end;
+                        mi();
+                    end;
+                    if E.Autoplay then
+                        gi();
+                    end;
+                    do
+                        local J, f, o, Pi = 0, false, 0, true;
+                        local function ki()
+                            o += 1;
+                            f = false;
+                        end;
+                        _G.__BubbleTrackConn (m.CharacterRemoving:Connect(ki));
+                        _G.__BubbleTrackStopper (function() Pi = false; ki(); end);
+                        local function xi()
+                            if not Pi or _G.dropActive or _G.IsDropping then
+                                return;
+                            end;
+                            local Pi = 0.1 - (os.clock() - J);
+                            if Pi > 0 then
+                                if not f then
+                                    f = true;
+                                    local _i, Li = o, m.Character;
+                                    task.delay(Pi, function() if _i ~= o or m.Character ~= Li then return; end; f = false; xi(); end);
+                                end;
+                                return;
+                            end;
+                            Pi = m.Character;
+                            if not Pi then
+                                return;
+                            end;
+                            local f = Pi:FindFirstChild("HumanoidRootPart");
+                            if not f then
+                                return;
+                            end;
+                            local o = Pi:FindFirstChildOfClass("Humanoid");
+                            if not o or o.Health <= 0 or f.Anchored or o.Sit or o.SeatPart then
+                                return;
+                            end;
+                            J = os.clock();
+                            ki();
+                            local J, J = f.CFrame:ToEulerAnglesYXZ();
+                            pcall(function() f.CFrame = CFrame.new(f.Position.X,- 7, f.Position.Z) * CFrame.Angles(0, J, 0); f.AssemblyLinearVelocity = Vector3.zero; end);
+                        end;
+                        _G.ExecuteTPDown = xi;
+                        FeatureToggles["TP Down"] = xi;
+                        do
+                            _G.__loadInstaReset = true;
+                            local J, f, o = false;
+                            local Pi, ki = false, false;
+                            local function _i ()
+                                if J then
+                                    return;
+                                end;
+                                J, Pi, ki = true, false, false;
+                                local Li = m.Character;
+                                local zi = Li and(Li:FindFirstChildOfClass("Humanoid"));
+                                if not Li or not zi then
+                                    J = false;
+                                    return;
+                                end;
+                                o = Li;
+                                f = task.spawn(function() local Si, gi = zi.HipHeight, 0; while Li and Li.Parent and zi and zi.Health > 0 and m.Character == Li and not ki do pcall(function() zi.HipHeight = 1.0E30; zi.AutoRotate = true; local Oi = Li:FindFirstChild("HumanoidRootPart"); if Oi then Oi.CanCollide = false; end; for Oi, Oi in ipairs(Li:GetChildren()) do if Oi:IsA("BasePart") and Oi.Name ~= "HumanoidRootPart" then Oi.CanCollide = false; end; end; end); if not Li.Parent or zi.Health <= 0 or m.Character ~= Li then Pi = true; break; end; gi += 1; if gi >= 40 then break; end; task.wait(0.05); end; if not Pi and Li and Li.Parent and zi.Health > 0 and m.Character == Li then pcall(function() zi.Health = 0; end); task.wait(0.1); gi = not Li.Parent or zi.Health <= 0; if gi then Pi = true; end; end; if not Pi and Li and Li.Parent and zi then pcall(function() zi.HipHeight = Si; local zi = Li:FindFirstChild("HumanoidRootPart"); if zi then zi.CanCollide = true; end; for zi, zi in ipairs(Li:GetChildren()) do if zi:IsA("BasePart") and zi.Name ~= "HumanoidRootPart" then zi.CanCollide = true; end; end; end); end; J, f, o, ki = false, nil, nil, false; end);
+                            end;
+                            local function Li()
+                                ki = true;
+                                if f then
+                                    pcall(task.cancel, f);
+                                    f = nil;
+                                end;
+                                J, o = false, nil;
+                            end;
+                            FeatureToggles["Insta Reset"] = _i;
+                            _G.__BubbleInstaReset = _i;
+                            _G.__BubbleTrackConn (m.CharacterAdded:Connect(function() Li(); Pi, ki = false, false; end));
+                            _G.__BubbleTrackConn (c.Heartbeat:Connect(function() if not f and not o and not J then return; end; local ki = m.Character; local _i = ki and(ki:FindFirstChildOfClass("Humanoid")); if _i and _i.Health <= 0 or o and ki ~= o then Pi = true; if f then pcall(task.cancel, f); f = nil; end; J, o = false, nil; end; end));
+                            _G.__BubbleTrackStopper (function() Li(); end);
+                        end;
+                        local J, f, o = 0, false;
+                        local Pi = RaycastParams.new();
+                        Pi.FilterType = Enum.RaycastFilterType.Exclude;
+                        pcall(function() Pi.RespectCanCollide = true; end);
+                        W["Auto TP Down"] = function(ki)
+                            if not ki then
+                                J, f, o = 0, false, nil;
+                            end;
+                        end;
+                        _G.__BubbleTrackConn (c.Heartbeat:Connect(function(ki) if E["Auto TP Down"] ~= true then return; end; if _G.dropActive or _G.IsDropping then J = 0; return; end; J += ki or 0; if J < 0.1 then return; end; J = 0; ki = m.Character; local J, _i = ki and(ki:FindFirstChildOfClass("Humanoid")), ki and(ki:FindFirstChild("HumanoidRootPart")); if not _i or not J or J.Health <= 0 then f, o = false, nil; return; end; if _i ~= o then o, f = _i, false; end; J = math.clamp(tonumber(N.AutoTPDownHeight) or 20, 1, 1000); Pi.FilterDescendantsInstances = {ki}; ki = workspace:Raycast(_i.Position, Vector3.new(0,- 2048, 0), Pi); local o = ki and(math.max(0, _i.Position.Y - ki.Position.Y)) or nil; ki = o ~= nil and o >= J; if ki and not f then f = true; xi(); elseif not ki then f = false; end; end));
+                    end;
+                    do
+                        local J, f = false;
+                        local function o()
+                            if J then
+                                return;
+                            end;
+                            local Pi = m.Character;
+                            if not Pi then
+                                return;
+                            end;
+                            local ki = Pi:FindFirstChild("HumanoidRootPart");
+                            if not ki then
+                                return;
+                            end;
+                            if f then
+                                f:Disconnect();
+                                f = nil;
+                            end;
+                            local xi = ki.Position.Y;
+                            J = true;
+                            _G.dropActive = true;
+                            _G.IsDropping = true;
+                            local ki = tick();
+                            f = c.Heartbeat:Connect(function() local _i = Pi and(Pi:FindFirstChild("HumanoidRootPart")); if not _i then f:Disconnect(); f, J = nil, false; _G.dropActive = false; _G.IsDropping = false; return; end; if tick() - ki >= 0.2 then f:Disconnect(); f = nil; local f, f = _i.CFrame:ToEulerAnglesYXZ(); _i.CFrame = CFrame.new(_i.Position.X, xi, _i.Position.Z) * CFrame.Angles(0, f, 0); _i.AssemblyLinearVelocity = Vector3.zero; pcall(function() _i.Velocity = Vector3.zero; end); J = false; _G.dropActive = false; _G.IsDropping = false; return; end; _i.AssemblyLinearVelocity = Vector3.new(_i.AssemblyLinearVelocity.X, 150, _i.AssemblyLinearVelocity.Z); end);
+                        end;
+                        FeatureToggles.Drop = o;
+                        _G.doDrop = o;
+                    end;
+                    function _G.__checkAndAutoDrop (J)
+                        a = true;
+                        local function f()
+                            a = false;
+                        end;
+                        if m:GetAttribute("Stealing") then
+                            local o = m.Character;
+                            if not o then
+                                if J then
+                                    J();
+                                end;
+                                f();
+                                return;
+                            end;
+                            local Pi, ki = o:FindFirstChildOfClass("Humanoid"), o:FindFirstChild("HumanoidRootPart");
+                            if not Pi or not ki then
+                                if J then
+                                    J();
+                                end;
+                                f();
+                                return;
+                            end;
+                            if FeatureToggles.Drop then
+                                FeatureToggles.Drop();
+                                Pi = tick();
+                                while m:GetAttribute("Stealing") and tick() - Pi < 5 do
+                                    task.wait();
+                                end;
+                            end;
+                            if J then
+                                J();
+                            end;
+                            f();
+                        else
+                            if J then
+                                J();
+                            end;
+                            f();
+                        end;
+                    end;
+                end;
+                local J, f = 0, {busy = false, data = {}};
+                do
+                    local o, Pi, ki, xi = m, workspace:WaitForChild("Plots"), {};
+                    local _i, Li, zi, Si = {caches = {}, connections = {}}, {}, {};
+                    local gi, Oi, ni, Ji = false, false, {};
+                    local fi, oi, qi = 0, {AUTO_STEAL_ENABLED = false, HOLD_MIN = 1.3, HOLD_MAX = 2.6, ENTRY_DELAY = 0.01, COOLDOWN = 0.05, STEAL_RANGE = 6, PRIME_RANGE = math.clamp(tonumber(P.Radius) or 65, 10, 150)}, setmetatable({}, {__mode = "k"});
+                    local function Bi(ji)
+                        if not ji then
+                            return nil;
+                        end;
+                        local wi = qi[ji];
+                        if wi and wi.Parent and(wi:IsA("ProximityPrompt")) and wi.ActionText and(wi.ActionText:find("Steal")) then
+                            return wi;
+                        end;
+                        wi = ji:FindFirstChild("PromptAttachment");
+                        for yi, yi in ipairs(wi and(wi:GetChildren()) or(ji:GetDescendants())) do
+                            if yi:IsA("ProximityPrompt") and yi.ActionText and(yi.ActionText:find("Steal")) then
+                                qi[ji] = yi;
+                                return yi;
+                            end;
+                        end;
+                        qi[ji] = nil;
+                        return nil;
+                    end;
+                    local qi, ji = {active = false, startTime = 0, phase = "idle", label = "", lastResult = "", lastResultTime = 0, totalSteals = 0, failedSteals = 0}, _G.__BubbleAutoStealState or {isStealing = false};
+                    _G.__BubbleAutoStealState = ji;
+                    local function wi(yi)
+                        yi = yi == true;
+                        if ji.isStealing == yi then
+                            return;
+                        end;
+                        ji.isStealing = yi;
+                    end;
+                    local function ji()
+                        if xi then
+                            return true;
+                        end;
+                        return pcall(function() local yi, Ui = i:WaitForChild("Packages", 10), i:WaitForChild("Datas", 10); if not yi or not Ui then return; end; ki = require(Ui:WaitForChild("Animals")); Ui = yi:WaitForChild("Synchronizer"); xi = {channelFolder = Ui:WaitForChild("Channel"), routeRemote = Ui:WaitForChild("CommunicationRoute"), requestData = Ui:FindFirstChild("RequestData")}; end) and xi ~= nil;
+                    end;
+                    local function i(yi)
+                        if typeof(yi) == "table" then
+                            return yi;
+                        end;
+                        local Ui = {};
+                        for ei in string.gmatch(tostring(yi), "[^%.]+") do
+                            table.insert(Ui, tonumber(ei) or ei);
+                        end;
+                        return Ui;
+                    end;
+                    local function yi(Ui, ei)
+                        local ai, Wi, Ti = ei;
+                        for ei, ei in ipairs(i(Ui)) do
+                            ai, Wi, Ti = ai and ai[ei] or nil, ai, ei;
+                        end;
+                        return ai, Wi, Ti;
+                    end;
+                    local function i(Ui, ei)
+                        local ai = _i.caches[Ui];
+                        if typeof(ai) ~= "table" then
+                            return;
+                        end;
+                        local Ui, Wi, Ti, li = ei[1], ei[2], ei[3], ei[4];
+                        local ei, Zi, pi = yi(Ui, ai);
+                        if Wi == "Changed" then
+                            if Zi ~= nil then
+                                Zi[pi] = Ti;
+                            end;
+                        elseif Wi == "ArrayInsert" then
+                            if ei ~= nil then
+                                table.insert(ei, li, Ti);
+                            end;
+                        elseif Wi == "ArrayRemoved" then
+                            if ei ~= nil then
+                                table.remove(ei, li);
+                            end;
+                        elseif Wi == "DictionaryInsert" then
+                            if ei ~= nil then
+                                ei[li] = Ti;
+                            end;
+                        elseif Wi == "DictionaryRemoved" then
+                            if ei ~= nil then
+                                ei[li] = nil;
+                            end;
+                        end;
+                    end;
+                    local function yi(Ui)
+                        if not xi or _i.connections[Ui] then
+                            return;
+                        end;
+                        local ei = tostring(Ui.Name);
+                        if not Pi:FindFirstChild(ei) then
+                            return;
+                        end;
+                        if xi.requestData and _i.caches[ei] == nil then
+                            local ai, Wi = pcall(function() return xi.requestData:InvokeServer(ei); end);
+                            _i.caches[ei] = ai and typeof(Wi) == "table" and Wi or {};
+                        elseif _i.caches[ei] == nil then
+                            _i.caches[ei] = {};
+                        end;
+                        _i.connections[Ui] = Ui.OnClientEvent:Connect(function(Ui) for ai, ai in ipairs(Ui) do i(ei, ai); end; end);
+                    end;
+                    local function i(Ui)
+                        for ei, ai in pairs(_i.connections) do
+                            if tostring(ei.Name) == tostring(Ui) then
+                                ai:Disconnect();
+                                _i.connections[ei] = nil;
+                                _i.caches[tostring(Ui)] = nil;
+                                break;
+                            end;
+                        end;
+                    end;
+                    local function Ui()
+                        if gi then
+                            return true;
+                        end;
+                        if not ji() then
+                            return false;
+                        end;
+                        if not xi or not xi.channelFolder then
+                            return false;
+                        end;
+                        for ji, ji in ipairs(xi.channelFolder:GetChildren()) do
+                            if ji:IsA("RemoteEvent") then
+                                yi(ji);
+                            end;
+                        end;
+                        xi.channelFolder.ChildAdded:Connect(function(ji) if ji:IsA("RemoteEvent") then yi(ji); end; end);
+                        xi.routeRemote.OnClientEvent:Connect(function(ji) for ei, ei in ipairs(ji) do local ji, ai = ei[1], tostring(ei[2]); if Pi:FindFirstChild(ai) then if ji == "ListenerAdded" then ei = xi.channelFolder:FindFirstChild(ai); if ei and(ei:IsA("RemoteEvent")) then yi(ei); end; elseif ji == "ListenerRemoved" then i(ai); end; end; end; end);
+                        gi = true;
+                        return true;
+                    end;
+                    local function i(xi)
+                        return _i.caches[xi];
+                    end;
+                    local function xi(_i)
+                        local gi = Pi:FindFirstChild(_i.plot);
+                        local ji = gi and(gi:FindFirstChild("AnimalPodiums"));
+                        gi = ji and(ji:FindFirstChild(_i.slot));
+                        return gi and gi:GetPivot().Position;
+                    end;
+                    local function _
+Preview truncated for large file
